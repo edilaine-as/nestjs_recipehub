@@ -1,0 +1,23 @@
+### Criar receita (POST)
+POST http://localhost:3333/recipes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA1ODEyNzMsImV4cCI6MTc2MDU4NDg3M30.I2JfbVziB3d1KF2khr2soiyWiBrvFKu5mEKnZIwQuec
+
+{
+  "title": "doce",
+  "category": "dessert",
+  "userId": "5002f32a-6e78-4c0a-9bed-93577581fcdb"
+}
+
+### Atualizar receita (PUT)
+PUT http://localhost:3333/recipes/911a34b4-2c66-4d6d-8834-ca229c3af2a3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA1ODEyNzMsImV4cCI6MTc2MDU4NDg3M30.I2JfbVziB3d1KF2khr2soiyWiBrvFKu5mEKnZIwQuec
+
+{
+  "title": "pudim"
+}
+
+### Deletar receita (DELETE)
+DELETE http://localhost:3333/recipes/911a34b4-2c66-4d6d-8834-ca229c3af2a3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA1ODEyNzMsImV4cCI6MTc2MDU4NDg3M30.I2JfbVziB3d1KF2khr2soiyWiBrvFKu5mEKnZIwQuec

@@ -1,0 +1,8 @@
+### Realizar autenticação de um usuário existente
+POST http://localhost:3333/auth
+Content-Type: application/json
+
+{
+    "email": "dila@example.com",
+    "password": "securepassword"
+}
