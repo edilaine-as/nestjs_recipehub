@@ -6,6 +6,8 @@ import { RecipeRepositoryImpl } from './infrastructure/repositories/recipe.repos
 import { CreateRecipeUseCase } from './application/use-cases/create-recipe.use-case'
 import { UpdateRecipeUseCase } from './application/use-cases/update-recipe.use-case'
 import { DeleteRecipeUseCase } from './application/use-cases/delete-recipe.use-case'
+import { GetRecipeByIdUseCase } from './application/use-cases/get-recipe-by-id.use-case'
+import { ListRecipesUseCase } from './application/use-cases/list-recipes.use-case'
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { DeleteRecipeUseCase } from './application/use-cases/delete-recipe.use-c
     CreateRecipeUseCase,
     UpdateRecipeUseCase,
     DeleteRecipeUseCase,
+    GetRecipeByIdUseCase,
+    ListRecipesUseCase,
   ],
   exports: [],
 })

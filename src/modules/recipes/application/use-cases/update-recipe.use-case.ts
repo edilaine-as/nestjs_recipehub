@@ -1,4 +1,8 @@
-import { Inject } from '@nestjs/common'
+import {
+  ForbiddenException,
+  Inject,
+  NotFoundException,
+} from '@nestjs/common'
 import type { RecipeRepository } from '../../domain/repositories/recipe.repository'
 import { RecipeCategory } from '../../shared/enums/recipe-category.enum'
 import { Recipe } from '../../domain/entities/recipe.entity'
@@ -24,13 +28,13 @@ export class UpdateRecipeUseCase {
         id,
       )
     if (!recipe) {
-      throw new Error(
+      throw new NotFoundException(
         'Recipe not found',
       )
     }
 
     if (recipe.getUserId() !== userId) {
-      throw new Error(
+      throw new ForbiddenException(
         'You are not the owner of this recipe',
       )
     }

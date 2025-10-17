@@ -6,7 +6,7 @@ import {
 import type { RecipeRepository } from '../../domain/repositories/recipe.repository'
 import { Recipe } from '../../domain/entities/recipe.entity'
 
-export class DeleteRecipeUseCase {
+export class GetRecipeByIdUseCase {
   constructor(
     @Inject('RecipeRepository')
     private readonly recipeRepository: RecipeRepository,
@@ -15,7 +15,7 @@ export class DeleteRecipeUseCase {
   async execute(
     id: string,
     userId: string,
-  ): Promise<Recipe> {
+  ): Promise<Recipe | null> {
     const recipe =
       await this.recipeRepository.findById(
         id,
@@ -31,10 +31,6 @@ export class DeleteRecipeUseCase {
         'You are not the owner of this recipe',
       )
     }
-
-    await this.recipeRepository.delete(
-      id,
-    )
 
     return recipe
   }

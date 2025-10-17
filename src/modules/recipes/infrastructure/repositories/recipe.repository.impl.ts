@@ -45,10 +45,14 @@ export class RecipeRepositoryImpl
       : null
   }
 
-  async findAll(): Promise<Recipe[]> {
+  async findAllByUserId(
+    userId: string,
+  ): Promise<Recipe[]> {
     const entities =
-      await this.ormRepo.find()
-
+      await this.ormRepo.find({
+        where: { userId },
+        order: { createdAt: 'DESC' },
+      })
     return entities.map((entity) =>
       Recipe.restore({
         id: entity.id,

@@ -6,5 +6,7 @@ export interface RecipeRepository {
   findById(
     id: string,
   ): Promise<Recipe | null>
-  findAll(): Promise<Recipe[]>
+  findAllByUserId(
+    id: string,
+  ): Promise<Recipe[]>
 }

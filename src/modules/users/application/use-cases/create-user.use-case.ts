@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Inject,
   Injectable,
 } from '@nestjs/common'
@@ -27,7 +28,7 @@ export class CreateUserUseCase {
       )
 
     if (userAlreadyExists) {
-      throw new Error(
+      throw new ConflictException(
         'User with this email already exists',
       )
     }

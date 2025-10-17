@@ -1,4 +1,8 @@
-import { Inject } from '@nestjs/common'
+import {
+  ConflictException,
+  Inject,
+  NotFoundException,
+} from '@nestjs/common'
 import { User } from '../../domain/entities/user.entity'
 import type { UserRepository } from '../../domain/repositories/user.repository'
 
@@ -24,7 +28,9 @@ export class UpdateUserUseCase {
       )
 
     if (!user) {
-      throw new Error('User not found')
+      throw new NotFoundException(
+        'User not found',
+      )
     }
 
     const { name, email, password } =
@@ -50,7 +56,7 @@ export class UpdateUserUseCase {
           email,
         )
       if (userWithEmail) {
-        throw new Error(
+        throw new ConflictException(
           'Email is already in use',
         )
       }

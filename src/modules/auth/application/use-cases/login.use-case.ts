@@ -3,6 +3,8 @@ import type { UserRepository } from 'src/modules/users/domain/repositories/user.
 import {
   Inject,
   Injectable,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common'
 import { AuthJwtService } from '../../infrastructure/services/auth-jwt.service'
 
@@ -24,7 +26,9 @@ export class LoginUseCase {
       )
 
     if (!user) {
-      throw new Error('User not found')
+      throw new NotFoundException(
+        'User not found',
+      )
     }
 
     const isPasswordValid =
@@ -33,7 +37,7 @@ export class LoginUseCase {
       )
 
     if (!isPasswordValid) {
-      throw new Error(
+      throw new UnauthorizedException(
         'Invalid password',
       )
     }
