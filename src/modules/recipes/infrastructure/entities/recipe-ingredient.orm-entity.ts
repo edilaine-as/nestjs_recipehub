@@ -18,23 +18,25 @@ export class RecipeIngredientOrmEntity {
   @Column('decimal')
   quantity: number
 
-  @Column()
-  recipeId: string
-
-  @ManyToOne(() => RecipeOrmEntity)
-  @JoinColumn({ name: 'recipeId' })
-  recipe?: RecipeOrmEntity
-
-  @Column()
-  ingredientId: string
-
-  @ManyToOne(() => IngredientOrmEntity)
-  @JoinColumn({ name: 'ingredientId' })
-  ingredient?: IngredientOrmEntity
-
   @CreateDateColumn()
   createdAt: Date
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  @ManyToOne(
+    () => RecipeOrmEntity,
+    (recipe) =>
+      recipe.recipeIngredients,
+  )
+  @JoinColumn({ name: 'recipeId' })
+  recipe: RecipeOrmEntity
+
+  @ManyToOne(
+    () => IngredientOrmEntity,
+    (ingredient) =>
+      ingredient.recipeIngredients,
+  )
+  @JoinColumn({ name: 'ingredientId' })
+  ingredient: IngredientOrmEntity
 }

@@ -5,10 +5,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { RecipeCategory } from '../../shared/enums/recipe-category.enum'
+import { RecipeIngredientOrmEntity } from './recipe-ingredient.orm-entity'
 
 @Entity('recipes')
 export class RecipeOrmEntity {
@@ -25,16 +27,37 @@ export class RecipeOrmEntity {
   })
   category: RecipeCategory
 
-  @Column()
-  userId: string
-
-  @ManyToOne(() => UserOrmEntity)
-  @JoinColumn({ name: 'userId' })
-  user?: UserOrmEntity
-
   @CreateDateColumn()
   createdAt: Date
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  @ManyToOne(
+    () => UserOrmEntity,
+    (user) => user.recipes,
+  )
+  @JoinColumn({ name: 'userId' })
+  user?: UserOrmEntity
+
+  @OneToMany(
+    () => RecipeIngredientOrmEntity,
+    (recipeIngredient) =>
+      recipeIngredient.recipe,
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  recipeIngredients: RecipeIngredientOrmEntity[]
+
+  // @OneToMany(
+  //   () => RecipeStepOrmEntity,
+  //   (recipeStep) => recipeStep.recipe,
+  //   {
+  //     cascade: true,
+  //     onDelete: 'CASCADE',
+  //   },
+  // )
+  // recipeStep: RecipeStepOrmEntity[]
 }
