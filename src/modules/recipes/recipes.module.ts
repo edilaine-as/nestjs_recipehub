@@ -8,12 +8,16 @@ import { UpdateRecipeUseCase } from './application/use-cases/update-recipe.use-c
 import { DeleteRecipeUseCase } from './application/use-cases/delete-recipe.use-case'
 import { GetRecipeByIdUseCase } from './application/use-cases/get-recipe-by-id.use-case'
 import { ListRecipesUseCase } from './application/use-cases/list-recipes.use-case'
+import { RecipeIngredientOrmEntity } from './infrastructure/entities/recipe-ingredient.orm-entity'
+import { IngredientsModule } from '../ingredients/ingredients.module'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       RecipeOrmEntity,
+      RecipeIngredientOrmEntity,
     ]),
+    IngredientsModule,
   ],
   controllers: [RecipesController],
   providers: [

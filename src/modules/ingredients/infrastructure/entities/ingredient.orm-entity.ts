@@ -8,10 +8,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { IngredientType } from '../../shared/enums/ingredient-type.enum'
-import { RecipeOrmEntity } from './recipe.orm-entity'
 import { UserOrmEntity } from 'src/modules/users/infrastructure/entities/user.orm-entity'
-import { RecipeIngredientOrmEntity } from './recipe-ingredient.orm-entity'
+import { RecipeIngredientOrmEntity } from 'src/modules/recipes/infrastructure/entities/recipe-ingredient.orm-entity'
+import { IngredientType } from '../../shared/enums/ingredient-type.enum'
 
 @Entity('ingredients')
 export class IngredientOrmEntity {
@@ -44,6 +43,10 @@ export class IngredientOrmEntity {
     () => RecipeIngredientOrmEntity,
     (recipeIngredient) =>
       recipeIngredient.ingredient,
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+    },
   )
-  recipeIngredients: RecipeOrmEntity[]
+  recipeIngredients: RecipeIngredientOrmEntity[]
 }

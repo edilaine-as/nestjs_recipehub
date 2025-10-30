@@ -88,6 +88,8 @@ export class UserRepositoryImpl
       password: domain.getPassword(),
       createdAt: domain.getCreatedAt(),
       updatedAt: domain.getUpdatedAt(),
+      recipes: [],
+      ingredients: [],
     }
   }
 }

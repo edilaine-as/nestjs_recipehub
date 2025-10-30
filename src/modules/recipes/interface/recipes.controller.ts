@@ -17,11 +17,18 @@ import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth.gu
 import { JwtPayloadDto } from 'src/modules/auth/shared/dto/jwt-payload.dto'
 import { ListRecipesUseCase } from '../application/use-cases/list-recipes.use-case'
 import { GetRecipeByIdUseCase } from '../application/use-cases/get-recipe-by-id.use-case'
+import { IngredientType } from 'src/modules/ingredients/shared/enums/ingredient-type.enum'
 
 class CreateRecipeDto {
   title: string
   category: RecipeCategory
   userId: string
+  ingredients?: {
+    id?: string
+    name: string
+    type: IngredientType
+    quantity: number
+  }[]
 }
 
 class UpdateRecipeDto {
@@ -64,6 +71,20 @@ export class RecipesController {
       id: recipe.getId(),
       title: recipe.getTitle(),
       category: recipe.getCategory(),
+      ingredients: recipe
+        .getIngredients()
+        .map((ri) => ({
+          id: ri
+            .getIngredient()
+            .getId(),
+          name: ri
+            .getIngredient()
+            .getName(),
+          type: ri
+            .getIngredient()
+            .getType(),
+          quantity: ri.getQuantity(),
+        })),
       userId: recipe.getUserId(),
     }
   }
@@ -86,6 +107,20 @@ export class RecipesController {
         id: recipe.getId(),
         title: recipe.getTitle(),
         category: recipe.getCategory(),
+        ingredients: recipe
+          .getIngredients()
+          .map((ri) => ({
+            id: ri
+              .getIngredient()
+              .getId(),
+            name: ri
+              .getIngredient()
+              .getName(),
+            type: ri
+              .getIngredient()
+              .getType(),
+            quantity: ri.getQuantity(),
+          })),
         userId: recipe.getUserId(),
       }),
     )
@@ -104,6 +139,20 @@ export class RecipesController {
       title: recipe.getTitle(),
       category: recipe.getCategory(),
       userId: recipe.getUserId(),
+      ingredients: recipe
+        .getIngredients()
+        .map((ri) => ({
+          id: ri
+            .getIngredient()
+            .getId(),
+          name: ri
+            .getIngredient()
+            .getName(),
+          type: ri
+            .getIngredient()
+            .getType(),
+          quantity: ri.getQuantity(),
+        })),
     }
   }
 

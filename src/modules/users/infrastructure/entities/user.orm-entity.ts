@@ -1,7 +1,10 @@
+import { IngredientOrmEntity } from 'src/modules/ingredients/infrastructure/entities/ingredient.orm-entity'
+import { RecipeOrmEntity } from 'src/modules/recipes/infrastructure/entities/recipe.orm-entity'
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -25,4 +28,24 @@ export class UserOrmEntity {
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  @OneToMany(
+    () => RecipeOrmEntity,
+    (recipe) => recipe.user,
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  recipes: RecipeOrmEntity[]
+
+  @OneToMany(
+    () => IngredientOrmEntity,
+    (ingredient) => ingredient.user,
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  ingredients: IngredientOrmEntity[]
 }

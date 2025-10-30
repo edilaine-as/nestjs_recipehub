@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { RecipeOrmEntity } from './recipe.orm-entity'
-import { IngredientOrmEntity } from './ingredient.orm-entity'
+import { IngredientOrmEntity } from 'src/modules/ingredients/infrastructure/entities/ingredient.orm-entity'
 
 @Entity('repice-ingredients')
 export class RecipeIngredientOrmEntity {
@@ -28,6 +28,7 @@ export class RecipeIngredientOrmEntity {
     () => RecipeOrmEntity,
     (recipe) =>
       recipe.recipeIngredients,
+    { onDelete: 'CASCADE' },
   )
   @JoinColumn({ name: 'recipeId' })
   recipe: RecipeOrmEntity
@@ -36,6 +37,7 @@ export class RecipeIngredientOrmEntity {
     () => IngredientOrmEntity,
     (ingredient) =>
       ingredient.recipeIngredients,
+    { onDelete: 'CASCADE' },
   )
   @JoinColumn({ name: 'ingredientId' })
   ingredient: IngredientOrmEntity

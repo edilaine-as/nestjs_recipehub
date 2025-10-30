@@ -36,6 +36,7 @@ export class RecipeOrmEntity {
   @ManyToOne(
     () => UserOrmEntity,
     (user) => user.recipes,
+    { onDelete: 'CASCADE' },
   )
   @JoinColumn({ name: 'userId' })
   user?: UserOrmEntity

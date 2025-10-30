@@ -1,31 +1,43 @@
 ### Listando receitas por usuário
 GET http://localhost:3333/recipes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA2NjY2NjAsImV4cCI6MTc2MDY3MDI2MH0.O0Fyrt6Lt5_3eSNm47vp2oN20FZft3udp2pAy3E0jE0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE3MDg5NTAsImV4cCI6MTc2MTcxMjU1MH0.3EITNRbiCeJlKMoaz5PAUa--zb2ngnUSB92dzE-3cIg
 
 ### Listar receita por ID
-GET http://localhost:3333/recipes/c9c03c1a-9312-4d9e-b9bb-7dc6cfa7e3b4
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA2NjY2NjAsImV4cCI6MTc2MDY3MDI2MH0.O0Fyrt6Lt5_3eSNm47vp2oN20FZft3udp2pAy3E0jE0
+GET http://localhost:3333/recipes/47ac1d47-3154-40b9-ba80-b616f72eb857
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE3MDg5NTAsImV4cCI6MTc2MTcxMjU1MH0.3EITNRbiCeJlKMoaz5PAUa--zb2ngnUSB92dzE-3cIg
 
 ### Criar receita (POST)
 POST http://localhost:3333/recipes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA2NjY2NjAsImV4cCI6MTc2MDY3MDI2MH0.O0Fyrt6Lt5_3eSNm47vp2oN20FZft3udp2pAy3E0jE0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE3MDg5NTAsImV4cCI6MTc2MTcxMjU1MH0.3EITNRbiCeJlKMoaz5PAUa--zb2ngnUSB92dzE-3cIg
 
 {
   "title": "doce",
   "category": "dessert",
-  "userId": "5002f32a-6e78-4c0a-9bed-93577581fcdb"
+  "userId": "5002f32a-6e78-4c0a-9bed-93577581fcdb",
+  "ingredients": [
+    {
+      "name": "açúcar",
+      "type": "Sugars and Sweeteners",
+      "quantity": 100
+    },
+    {
+      "name": "farinha",
+      "type": "Dairy",
+      "quantity": 200
+    }
+  ]
 }
 
 ### Atualizar receita (PUT)
 PUT http://localhost:3333/recipes/911a34b4-2c66-4d6d-8834-ca229c3af2a3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA2NjY2NjAsImV4cCI6MTc2MDY3MDI2MH0.O0Fyrt6Lt5_3eSNm47vp2oN20FZft3udp2pAy3E0jE0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE3MDg5NTAsImV4cCI6MTc2MTcxMjU1MH0.3EITNRbiCeJlKMoaz5PAUa--zb2ngnUSB92dzE-3cIg
 
 {
   "title": "pudim"
 }
 
 ### Deletar receita (DELETE)
-DELETE http://localhost:3333/recipes/911a34b4-2c66-4d6d-8834-ca229c3af2a3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjA2NjY2NjAsImV4cCI6MTc2MDY3MDI2MH0.O0Fyrt6Lt5_3eSNm47vp2oN20FZft3udp2pAy3E0jE0
+DELETE http://localhost:3333/recipes/f9e56578-94d0-43a5-8cfe-3b590714a89b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE3MDg5NTAsImV4cCI6MTc2MTcxMjU1MH0.3EITNRbiCeJlKMoaz5PAUa--zb2ngnUSB92dzE-3cIg
