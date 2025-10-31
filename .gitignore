@@ -8,3 +8,7 @@
 
 # archives 
 requirements.txt
+auth.http
+recipes.http
+ingredients.http
+users.http

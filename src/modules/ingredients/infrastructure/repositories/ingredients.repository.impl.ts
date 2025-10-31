@@ -35,6 +35,27 @@ export class IngredientRepositoryImpl
     const entity =
       await this.ormRepo.findOne({
         where: { id },
+        relations: ['user'],
+      })
+
+    if (!entity) {
+      return null
+    }
+
+    return this.toDomainEntity(entity)
+  }
+
+  async findByNameAndUserId(
+    name: string,
+    userId: string,
+  ): Promise<Ingredient | null> {
+    const entity =
+      await this.ormRepo.findOne({
+        where: {
+          name,
+          user: { id: userId },
+        },
+        relations: ['user'],
       })
 
     if (!entity) {
@@ -63,6 +84,7 @@ export class IngredientRepositoryImpl
     ingredient: Ingredient,
   ): IngredientOrmEntity {
     const user = new UserOrmEntity()
+    user.id = ingredient.getUserId()
 
     const entity =
       new IngredientOrmEntity()

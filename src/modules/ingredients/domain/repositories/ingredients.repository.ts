@@ -8,6 +8,10 @@ export interface IngredientRepository {
   findById(
     id: string,
   ): Promise<Ingredient | null>
+  findByNameAndUserId(
+    name: string,
+    userId: string,
+  ): Promise<Ingredient | null>
   findAllByUserId(
     id: string,
   ): Promise<Ingredient[]>

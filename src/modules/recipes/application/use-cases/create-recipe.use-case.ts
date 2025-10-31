@@ -51,6 +51,33 @@ export class CreateRecipeUseCase {
           }
           ingredient =
             ingredientExisting
+        } else if (ing.name) {
+          const ingredientByNameExisting =
+            await this.ingredientsRepository.findByNameAndUserId(
+              ing.name,
+              input.userId,
+            )
+
+          if (
+            !ingredientByNameExisting
+          ) {
+            const typeValue: IngredientType =
+              ing.type
+
+            ingredient =
+              Ingredient.create({
+                name: ing.name,
+                type: typeValue,
+                userId: input.userId,
+              })
+
+            await this.ingredientsRepository.save(
+              ingredient,
+            )
+          } else {
+            ingredient =
+              ingredientByNameExisting
+          }
         } else {
           const typeValue: IngredientType =
             ing.type
