@@ -1,3 +1,31 @@
-### Deletar receita (DELETE)
+### Listando ingredientes por usuário
+GET http://localhost:3333/ingredients
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjM0MzU1MjUsImV4cCI6MTc2MzQzOTEyNX0.eY28IFAKw7lkY2UWelvXyIr8jGTOAB4Nb3h5Z3raKWc
+
+### Listar ingrediente por ID
+GET http://localhost:3333/ingredients/2358b7bf-c1e9-4fd8-9b62-bad34fb1e244
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjM0MzU1MjUsImV4cCI6MTc2MzQzOTEyNX0.eY28IFAKw7lkY2UWelvXyIr8jGTOAB4Nb3h5Z3raKWc
+
+### Criar ingrediente (POST)
+POST http://localhost:3333/ingredients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjM0MzU1MjUsImV4cCI6MTc2MzQzOTEyNX0.eY28IFAKw7lkY2UWelvXyIr8jGTOAB4Nb3h5Z3raKWc
+
+{
+  "name": "leite",
+  "type": "Dairy",
+  "userId": "5002f32a-6e78-4c0a-9bed-93577581fcdb"
+}
+
+### Atualizar ingrediente (PUT)
+PUT http://localhost:3333/ingredients/6534f178-29ad-4094-b5a6-0497b41b54f8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjM0MzU1MjUsImV4cCI6MTc2MzQzOTEyNX0.eY28IFAKw7lkY2UWelvXyIr8jGTOAB4Nb3h5Z3raKWc
+
+{
+  "name": "milk"
+}
+
+### Deletar ingrediente (DELETE)
 DELETE http://localhost:3333/ingredients/3236e7bf-b16b-42a2-95e5-c146d1645cbd
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE4NzczODgsImV4cCI6MTc2MTg4MDk4OH0.x2uvBQuteEg9mfONm4JcRn9SkVYj7N7-hhie6p_WLZc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjM0MzU1MjUsImV4cCI6MTc2MzQzOTEyNX0.eY28IFAKw7lkY2UWelvXyIr8jGTOAB4Nb3h5Z3raKWc

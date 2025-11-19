@@ -57,6 +57,20 @@ export class Ingredient {
     )
   }
 
+  private touchUpdatedAt() {
+    this.updatedAt = new Date()
+  }
+
+  setName(name: string) {
+    this.name = name
+    this.touchUpdatedAt()
+  }
+
+  setType(type: IngredientType) {
+    this.type = type
+    this.getUpdatedAt()
+  }
+
   getId() {
     return this.id
   }

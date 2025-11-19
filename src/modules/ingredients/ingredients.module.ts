@@ -4,6 +4,10 @@ import { IngredientOrmEntity } from './infrastructure/entities/ingredient.orm-en
 import { DeleteIngredientUseCase } from './application/use-cases/delete-ingredient.use-case'
 import { IngredientsController } from './interface/ingredients.controller'
 import { IngredientRepositoryImpl } from './infrastructure/repositories/ingredients.repository.impl'
+import { GetIngredientByIdUseCase } from './application/use-cases/get-ingredient-by-id.use-case'
+import { ListIngredientsUseCase } from './application/use-cases/list-ingredients.use-case'
+import { CreateIngredientUseCase } from './application/use-cases/create-ingredient.use-case'
+import { UpdateIngredientUseCase } from './application/use-cases/update-ingredient.use-case'
 
 @Module({
   imports: [
@@ -18,7 +22,11 @@ import { IngredientRepositoryImpl } from './infrastructure/repositories/ingredie
       useClass:
         IngredientRepositoryImpl,
     },
+    CreateIngredientUseCase,
+    UpdateIngredientUseCase,
     DeleteIngredientUseCase,
+    GetIngredientByIdUseCase,
+    ListIngredientsUseCase,
   ],
   exports: [
     'IngredientRepository',

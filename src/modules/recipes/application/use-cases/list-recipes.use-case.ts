@@ -1,7 +1,4 @@
-import {
-  Inject,
-  NotFoundException,
-} from '@nestjs/common'
+import { Inject } from '@nestjs/common'
 import type { RecipeRepository } from '../../domain/repositories/recipe.repository'
 import { Recipe } from '../../domain/entities/recipe.entity'
 
@@ -19,9 +16,7 @@ export class ListRecipesUseCase {
         userId,
       )
     if (!recipes) {
-      throw new NotFoundException(
-        'No recipe found',
-      )
+      return []
     }
 
     return recipes
