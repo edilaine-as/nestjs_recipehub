@@ -10,6 +10,7 @@ import { GetRecipeByIdUseCase } from './application/use-cases/get-recipe-by-id.u
 import { ListRecipesUseCase } from './application/use-cases/list-recipes.use-case'
 import { RecipeIngredientOrmEntity } from './infrastructure/entities/recipe-ingredient.orm-entity'
 import { IngredientsModule } from '../ingredients/ingredients.module'
+import { AddIngredientUseCase } from './application/use-cases/add-ingredient.use-case'
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { IngredientsModule } from '../ingredients/ingredients.module'
       useClass: RecipeRepositoryImpl,
     },
     CreateRecipeUseCase,
+    AddIngredientUseCase,
     UpdateRecipeUseCase,
     DeleteRecipeUseCase,
     GetRecipeByIdUseCase,

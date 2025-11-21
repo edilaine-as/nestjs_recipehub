@@ -18,17 +18,19 @@ import { JwtPayloadDto } from 'src/modules/auth/shared/dto/jwt-payload.dto'
 import { ListRecipesUseCase } from '../application/use-cases/list-recipes.use-case'
 import { GetRecipeByIdUseCase } from '../application/use-cases/get-recipe-by-id.use-case'
 import { IngredientType } from 'src/modules/ingredients/shared/enums/ingredient-type.enum'
+import { AddIngredientUseCase } from '../application/use-cases/add-ingredient.use-case'
 
 class CreateRecipeDto {
   title: string
   category: RecipeCategory
   userId: string
-  ingredients?: {
-    id?: string
-    name: string
-    type: IngredientType
-    quantity: number
-  }[]
+}
+
+class AddIngredientDto {
+  id?: string
+  name: string
+  type: IngredientType
+  quantity: number
 }
 
 class UpdateRecipeDto {
@@ -41,6 +43,7 @@ class UpdateRecipeDto {
 export class RecipesController {
   constructor(
     private readonly createRecipeUseCase: CreateRecipeUseCase,
+    private readonly addIngredientUseCase: AddIngredientUseCase,
     private readonly updateRecipeUseCase: UpdateRecipeUseCase,
     private readonly deleteRecipeUseCase: DeleteRecipeUseCase,
     private readonly getRecipeUseCase: GetRecipeByIdUseCase,
@@ -139,20 +142,31 @@ export class RecipesController {
       title: recipe.getTitle(),
       category: recipe.getCategory(),
       userId: recipe.getUserId(),
-      ingredients: recipe
-        .getIngredients()
-        .map((ri) => ({
-          id: ri
-            .getIngredient()
-            .getId(),
-          name: ri
-            .getIngredient()
-            .getName(),
-          type: ri
-            .getIngredient()
-            .getType(),
-          quantity: ri.getQuantity(),
-        })),
+    }
+  }
+
+  @Post(':id/ingredients')
+  async addIngredient(
+    @Param('id') id: string,
+    @Body() body: AddIngredientDto,
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
+  ) {
+    const userId = req.user.userId
+
+    const ingredient =
+      await this.addIngredientUseCase.execute(
+        id,
+        body,
+        userId,
+      )
+
+    return {
+      message:
+        'Ingredient added successfully',
+      ingredient,
     }
   }
 
