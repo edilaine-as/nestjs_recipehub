@@ -19,6 +19,7 @@ import { ListRecipesUseCase } from '../application/use-cases/list-recipes.use-ca
 import { GetRecipeByIdUseCase } from '../application/use-cases/get-recipe-by-id.use-case'
 import { IngredientType } from 'src/modules/ingredients/shared/enums/ingredient-type.enum'
 import { AddIngredientUseCase } from '../application/use-cases/add-ingredient.use-case'
+import { AddStepUseCase } from '../application/use-cases/add-step.use-case'
 
 class CreateRecipeDto {
   title: string
@@ -33,6 +34,11 @@ class AddIngredientDto {
   quantity: number
 }
 
+class AddStepDto {
+  step: number
+  description: string
+}
+
 class UpdateRecipeDto {
   title?: string
   category?: RecipeCategory
@@ -44,6 +50,7 @@ export class RecipesController {
   constructor(
     private readonly createRecipeUseCase: CreateRecipeUseCase,
     private readonly addIngredientUseCase: AddIngredientUseCase,
+    private readonly addStepUseCase: AddStepUseCase,
     private readonly updateRecipeUseCase: UpdateRecipeUseCase,
     private readonly deleteRecipeUseCase: DeleteRecipeUseCase,
     private readonly getRecipeUseCase: GetRecipeByIdUseCase,
@@ -167,6 +174,31 @@ export class RecipesController {
       message:
         'Ingredient added successfully',
       ingredient,
+    }
+  }
+
+  @Post(':id/steps')
+  async addStep(
+    @Param('id') id: string,
+    @Body() body: AddStepDto,
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
+  ) {
+    const userId = req.user.userId
+
+    const step =
+      await this.addStepUseCase.execute(
+        id,
+        body,
+        userId,
+      )
+
+    return {
+      message:
+        'Step added successfully',
+      step,
     }
   }
 

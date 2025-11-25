@@ -8,6 +8,8 @@ import { RecipeIngredient } from '../../domain/entities/recipe-ingredient.entity
 import { RecipeIngredientOrmEntity } from '../entities/recipe-ingredient.orm-entity'
 import { IngredientOrmEntity } from 'src/modules/ingredients/infrastructure/entities/ingredient.orm-entity'
 import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.entity'
+import { RecipeStep } from '../../domain/entities/recipe-step.entity'
+import { RecipeStepOrmEntity } from '../entities/recipe-step.orm-entity'
 
 export class RecipeRepositoryImpl
   implements RecipeRepository
@@ -40,6 +42,7 @@ export class RecipeRepositoryImpl
         relations: [
           'user',
           'recipeIngredients',
+          'recipeSteps',
           'recipeIngredients.ingredient',
         ],
       })
@@ -61,6 +64,7 @@ export class RecipeRepositoryImpl
         relations: [
           'user',
           'recipeIngredients',
+          'recipeSteps',
           'recipeIngredients.ingredient',
         ],
       })
@@ -74,6 +78,17 @@ export class RecipeRepositoryImpl
   ): RecipeOrmEntity {
     const user = new UserOrmEntity()
     user.id = recipe.getUserId()
+
+    const entity = new RecipeOrmEntity()
+    entity.id = recipe.getId()
+    entity.title = recipe.getTitle()
+    entity.category =
+      recipe.getCategory()
+    entity.user = user
+    entity.createdAt =
+      recipe.getCreatedAt()
+    entity.updatedAt =
+      recipe.getUpdatedAt()
 
     const recipeIngredients = recipe
       .getIngredients()
@@ -110,22 +125,36 @@ export class RecipeRepositoryImpl
           ri.getCreatedAt()
         recipeIngredientsOrm.updatedAt =
           ri.getUpdatedAt()
+        recipeIngredientsOrm.recipe =
+          entity
 
         return recipeIngredientsOrm
       })
 
-    const entity = new RecipeOrmEntity()
-    entity.id = recipe.getId()
-    entity.title = recipe.getTitle()
-    entity.category =
-      recipe.getCategory()
-    entity.user = user
-    entity.createdAt =
-      recipe.getCreatedAt()
-    entity.updatedAt =
-      recipe.getUpdatedAt()
+    const steps = recipe
+      .getSteps()
+      .map((step) => {
+        const recipeStepOrm =
+          new RecipeStepOrmEntity()
+
+        recipeStepOrm.id = step.getId()
+        recipeStepOrm.stepNumber =
+          step.getStep()
+        recipeStepOrm.description =
+          step.getDescription()
+        recipeStepOrm.createdAt =
+          step.getCreatedAt()
+        recipeStepOrm.updatedAt =
+          step.getUpdatedAt()
+        recipeStepOrm.recipe = entity
+
+        return recipeStepOrm
+      })
+
     entity.recipeIngredients =
       recipeIngredients
+    entity.recipeSteps = steps
+
     return entity
   }
 
@@ -157,6 +186,18 @@ export class RecipeRepositoryImpl
         }),
       )
 
+    const steps: RecipeStep[] = (
+      entity.recipeSteps ?? []
+    ).map((step) =>
+      RecipeStep.restore({
+        id: step.id,
+        step: step.stepNumber,
+        description: step.description,
+        createdAt: step.createdAt,
+        updatedAt: step.updatedAt,
+      }),
+    )
+
     return Recipe.restore({
       id: entity.id,
       title: entity.title,
@@ -165,6 +206,7 @@ export class RecipeRepositoryImpl
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       ingredients,
+      steps,
     })
   }
 }

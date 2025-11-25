@@ -11,12 +11,15 @@ import { ListRecipesUseCase } from './application/use-cases/list-recipes.use-cas
 import { RecipeIngredientOrmEntity } from './infrastructure/entities/recipe-ingredient.orm-entity'
 import { IngredientsModule } from '../ingredients/ingredients.module'
 import { AddIngredientUseCase } from './application/use-cases/add-ingredient.use-case'
+import { AddStepUseCase } from './application/use-cases/add-step.use-case'
+import { RecipeStepOrmEntity } from './infrastructure/entities/recipe-step.orm-entity'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       RecipeOrmEntity,
       RecipeIngredientOrmEntity,
+      RecipeStepOrmEntity,
     ]),
     IngredientsModule,
   ],
@@ -28,6 +31,7 @@ import { AddIngredientUseCase } from './application/use-cases/add-ingredient.use
     },
     CreateRecipeUseCase,
     AddIngredientUseCase,
+    AddStepUseCase,
     UpdateRecipeUseCase,
     DeleteRecipeUseCase,
     GetRecipeByIdUseCase,

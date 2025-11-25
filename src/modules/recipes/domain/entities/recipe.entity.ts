@@ -2,6 +2,7 @@ import { RecipeCategory } from '../../shared/enums/recipe-category.enum'
 import { v4 as uuidv4 } from 'uuid'
 import { RecipeIngredient } from './recipe-ingredient.entity'
 import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.entity'
+import { RecipeStep } from './recipe-step.entity'
 
 export class Recipe {
   private readonly id: string
@@ -9,6 +10,7 @@ export class Recipe {
   private category: RecipeCategory
   private userId: string
   private ingredients: RecipeIngredient[]
+  private steps: RecipeStep[]
   private readonly createdAt: Date
   private updatedAt: Date
 
@@ -17,6 +19,7 @@ export class Recipe {
     category: RecipeCategory,
     userId: string,
     ingredients: RecipeIngredient[],
+    steps: RecipeStep[],
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
@@ -25,6 +28,7 @@ export class Recipe {
     this.category = category
     this.userId = userId
     this.ingredients = ingredients
+    this.steps = steps
     this.id = id ?? uuidv4()
     this.createdAt =
       createdAt ?? new Date()
@@ -37,12 +41,14 @@ export class Recipe {
     category: RecipeCategory
     userId: string
     ingredients?: RecipeIngredient[]
+    steps?: RecipeStep[]
   }) {
     return new Recipe(
       props.title,
       props.category,
       props.userId,
       props.ingredients || [],
+      props.steps || [],
     )
   }
 
@@ -52,6 +58,7 @@ export class Recipe {
     category: RecipeCategory
     userId: string
     ingredients: RecipeIngredient[]
+    steps: RecipeStep[]
     createdAt: Date
     updatedAt: Date
   }): Recipe {
@@ -60,6 +67,7 @@ export class Recipe {
       props.category,
       props.userId,
       props.ingredients,
+      props.steps,
       props.id,
       props.createdAt,
       props.updatedAt,
@@ -83,6 +91,21 @@ export class Recipe {
     this.touchUpdatedAt()
   }
 
+  addStep(
+    step: number,
+    description: string,
+  ) {
+    const newRecipeStep =
+      RecipeStep.create({
+        step,
+        description,
+      })
+
+    this.steps.push(newRecipeStep)
+
+    this.touchUpdatedAt()
+  }
+
   private touchUpdatedAt() {
     this.updatedAt = new Date()
   }
@@ -101,6 +124,10 @@ export class Recipe {
 
   getIngredients(): RecipeIngredient[] {
     return this.ingredients
+  }
+
+  getSteps(): RecipeStep[] {
+    return this.steps
   }
 
   getId(): string {

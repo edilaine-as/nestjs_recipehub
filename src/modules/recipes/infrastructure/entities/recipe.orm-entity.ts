@@ -11,6 +11,7 @@ import {
 } from 'typeorm'
 import { RecipeCategory } from '../../shared/enums/recipe-category.enum'
 import { RecipeIngredientOrmEntity } from './recipe-ingredient.orm-entity'
+import { RecipeStepOrmEntity } from './recipe-step.orm-entity'
 
 @Entity('recipes')
 export class RecipeOrmEntity {
@@ -52,13 +53,13 @@ export class RecipeOrmEntity {
   )
   recipeIngredients: RecipeIngredientOrmEntity[]
 
-  // @OneToMany(
-  //   () => RecipeStepOrmEntity,
-  //   (recipeStep) => recipeStep.recipe,
-  //   {
-  //     cascade: true,
-  //     onDelete: 'CASCADE',
-  //   },
-  // )
-  // recipeStep: RecipeStepOrmEntity[]
+  @OneToMany(
+    () => RecipeStepOrmEntity,
+    (recipeStep) => recipeStep.recipe,
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+    },
+  )
+  recipeSteps: RecipeStepOrmEntity[]
 }
