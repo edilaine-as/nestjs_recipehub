@@ -99,5 +99,9 @@ export class AddIngredientUseCase {
       ingredient,
       input.quantity,
     )
+
+    await this.recipeRepository.save(
+      recipe,
+    )
   }
 }

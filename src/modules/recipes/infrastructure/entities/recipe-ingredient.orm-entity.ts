@@ -10,7 +10,7 @@ import {
 import { RecipeOrmEntity } from './recipe.orm-entity'
 import { IngredientOrmEntity } from 'src/modules/ingredients/infrastructure/entities/ingredient.orm-entity'
 
-@Entity('repice-ingredients')
+@Entity('recipe-ingredients')
 export class RecipeIngredientOrmEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
