@@ -121,6 +121,8 @@ export class RecipeRepositoryImpl
           ingredientOrm
         recipeIngredientsOrm.quantity =
           ri.getQuantity()
+        recipeIngredientsOrm.unit =
+          ri.getUnit()
         recipeIngredientsOrm.createdAt =
           ri.getCreatedAt()
         recipeIngredientsOrm.updatedAt =
@@ -181,6 +183,7 @@ export class RecipeRepositoryImpl
                 ri.ingredient.updatedAt,
             }),
           quantity: ri.quantity,
+          unit: ri.unit,
           createdAt: ri.createdAt,
           updatedAt: ri.updatedAt,
         }),

@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { RecipeIngredient } from './recipe-ingredient.entity'
 import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.entity'
 import { RecipeStep } from './recipe-step.entity'
+import { RecipeIngredientUnit } from '../../shared/enums/recipe-ingredient-unit.enum'
 
 export class Recipe {
   private readonly id: string
@@ -77,11 +78,13 @@ export class Recipe {
   addIngredient(
     ingredient: Ingredient,
     quantity: number,
+    unit: RecipeIngredientUnit,
   ) {
     const newRecipeIngredient =
       RecipeIngredient.create({
         ingredient,
         quantity,
+        unit,
       })
 
     this.ingredients.push(

@@ -1,22 +1,26 @@
 import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.entity'
 import { v4 as uuidv4 } from 'uuid'
+import { RecipeIngredientUnit } from '../../shared/enums/recipe-ingredient-unit.enum'
 
 export class RecipeIngredient {
   private readonly id: string
   private ingredient: Ingredient
   private quantity: number
+  private unit: RecipeIngredientUnit
   private readonly createdAt: Date
   private updatedAt: Date
 
   private constructor(
     ingredient: Ingredient,
     quantity: number,
+    unit: RecipeIngredientUnit,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
   ) {
     this.ingredient = ingredient
     this.quantity = quantity
+    this.unit = unit
     this.id = id ?? uuidv4()
     this.createdAt =
       createdAt ?? new Date()
@@ -27,10 +31,12 @@ export class RecipeIngredient {
   static create(props: {
     ingredient: Ingredient
     quantity: number
+    unit: RecipeIngredientUnit
   }) {
     return new RecipeIngredient(
       props.ingredient,
       props.quantity,
+      props.unit,
     )
   }
 
@@ -38,12 +44,14 @@ export class RecipeIngredient {
     id: string
     ingredient: Ingredient
     quantity: number
+    unit: RecipeIngredientUnit
     createdAt: Date
     updatedAt: Date
   }): RecipeIngredient {
     return new RecipeIngredient(
       props.ingredient,
       props.quantity,
+      props.unit,
       props.id,
       props.createdAt,
       props.updatedAt,
@@ -66,6 +74,10 @@ export class RecipeIngredient {
     return this.quantity
   }
 
+  getUnit() {
+    return this.unit
+  }
+
   getCreatedAt() {
     return this.createdAt
   }
@@ -76,6 +88,11 @@ export class RecipeIngredient {
 
   setQuantity(quantity: number) {
     this.quantity = quantity
+    this.touchUpdatedAt()
+  }
+
+  setUnit(unit: RecipeIngredientUnit) {
+    this.unit = unit
     this.touchUpdatedAt()
   }
 }

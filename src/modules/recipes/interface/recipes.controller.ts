@@ -20,6 +20,7 @@ import { GetRecipeByIdUseCase } from '../application/use-cases/get-recipe-by-id.
 import { IngredientType } from 'src/modules/ingredients/shared/enums/ingredient-type.enum'
 import { AddIngredientUseCase } from '../application/use-cases/add-ingredient.use-case'
 import { AddStepUseCase } from '../application/use-cases/add-step.use-case'
+import { RecipeIngredientUnit } from '../shared/enums/recipe-ingredient-unit.enum'
 
 class CreateRecipeDto {
   title: string
@@ -32,6 +33,7 @@ class AddIngredientDto {
   name: string
   type: IngredientType
   quantity: number
+  unit: RecipeIngredientUnit
 }
 
 class AddStepDto {
@@ -94,6 +96,7 @@ export class RecipesController {
             .getIngredient()
             .getType(),
           quantity: ri.getQuantity(),
+          unit: ri.getUnit(),
         })),
       userId: recipe.getUserId(),
     }
@@ -130,6 +133,7 @@ export class RecipesController {
               .getIngredient()
               .getType(),
             quantity: ri.getQuantity(),
+            unit: ri.getUnit(),
           })),
         userId: recipe.getUserId(),
       }),

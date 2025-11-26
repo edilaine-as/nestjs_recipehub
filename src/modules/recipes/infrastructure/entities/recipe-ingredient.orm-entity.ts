@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import { RecipeOrmEntity } from './recipe.orm-entity'
 import { IngredientOrmEntity } from 'src/modules/ingredients/infrastructure/entities/ingredient.orm-entity'
+import { RecipeIngredientUnit } from '../../shared/enums/recipe-ingredient-unit.enum'
 
 @Entity('recipe-ingredients')
 export class RecipeIngredientOrmEntity {
@@ -17,6 +18,12 @@ export class RecipeIngredientOrmEntity {
 
   @Column('decimal')
   quantity: number
+
+  @Column({
+    type: 'enum',
+    enum: RecipeIngredientUnit,
+  })
+  unit: RecipeIngredientUnit
 
   @CreateDateColumn()
   createdAt: Date

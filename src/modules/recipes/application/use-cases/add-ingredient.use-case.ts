@@ -7,12 +7,14 @@ import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.e
 import type { RecipeRepository } from '../../domain/repositories/recipe.repository'
 import type { IngredientRepository } from 'src/modules/ingredients/domain/repositories/ingredients.repository'
 import { IngredientType } from 'src/modules/ingredients/shared/enums/ingredient-type.enum'
+import { RecipeIngredientUnit } from '../../shared/enums/recipe-ingredient-unit.enum'
 
 interface AddIngredientInput {
   id?: string
   name: string
   type: IngredientType
   quantity: number
+  unit: RecipeIngredientUnit
 }
 
 export class AddIngredientUseCase {
@@ -98,6 +100,7 @@ export class AddIngredientUseCase {
     recipe.addIngredient(
       ingredient,
       input.quantity,
+      input.unit,
     )
 
     await this.recipeRepository.save(
