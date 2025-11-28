@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common'
 import { CreateRecipeUseCase } from '../application/use-cases/create-recipe.use-case'
 import { RecipeCategory } from '../shared/enums/recipe-category.enum'
-import { UpdateRecipeUseCase } from '../application/use-cases/update-recipe.use-case'
 import { DeleteRecipeUseCase } from '../application/use-cases/delete-recipe.use-case'
 import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth.guards'
 import { JwtPayloadDto } from 'src/modules/auth/shared/dto/jwt-payload.dto'
@@ -21,6 +20,7 @@ import { IngredientType } from 'src/modules/ingredients/shared/enums/ingredient-
 import { AddIngredientUseCase } from '../application/use-cases/add-ingredient.use-case'
 import { AddStepUseCase } from '../application/use-cases/add-step.use-case'
 import { RecipeIngredientUnit } from '../shared/enums/recipe-ingredient-unit.enum'
+import { UpdateRecipeUseCase } from '../application/use-cases/update-recipe.use-case'
 
 class CreateRecipeDto {
   title: string
@@ -99,6 +99,14 @@ export class RecipesController {
           quantity: ri.getQuantity(),
           unit: ri.getUnit(),
         })),
+      steps: recipe
+        .getSteps()
+        .map((step) => ({
+          id: step.getId(),
+          step: step.getStep(),
+          description:
+            step.getDescription(),
+        })),
       userId: recipe.getUserId(),
     }
   }
@@ -136,6 +144,14 @@ export class RecipesController {
               .getType(),
             quantity: ri.getQuantity(),
             unit: ri.getUnit(),
+          })),
+        steps: recipe
+          .getSteps()
+          .map((step) => ({
+            id: step.getId(),
+            step: step.getStep(),
+            description:
+              step.getDescription(),
           })),
         userId: recipe.getUserId(),
       }),
@@ -225,12 +241,7 @@ export class RecipesController {
         body,
         userId,
       )
-    return {
-      id: recipe.getId(),
-      title: recipe.getTitle(),
-      category: recipe.getCategory(),
-      userId: recipe.getUserId(),
-    }
+    return recipe
   }
 
   @Delete(':id')
