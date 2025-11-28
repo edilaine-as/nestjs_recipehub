@@ -12,7 +12,7 @@ export class ListIngredientsUseCase {
     userId: string,
   ): Promise<Ingredient[] | null> {
     const ingredients =
-      await this.ingredientRepository.findAllByUserId(
+      await this.ingredientRepository.findAll(
         userId,
       )
     if (!ingredients) {

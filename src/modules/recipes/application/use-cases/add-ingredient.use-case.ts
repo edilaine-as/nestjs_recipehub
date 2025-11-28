@@ -1,5 +1,4 @@
 import {
-  ForbiddenException,
   Inject,
   NotFoundException,
 } from '@nestjs/common'
@@ -33,17 +32,12 @@ export class AddIngredientUseCase {
     const recipe =
       await this.recipeRepository.findById(
         id,
+        userId,
       )
     if (!recipe)
       throw new NotFoundException(
         'Recipe not found',
       )
-
-    if (recipe.getUserId() !== userId) {
-      throw new ForbiddenException(
-        'You are not the owner of this recipe',
-      )
-    }
 
     let ingredient: Ingredient
 
@@ -51,6 +45,7 @@ export class AddIngredientUseCase {
       const ingredientExisting =
         await this.ingredientsRepository.findById(
           input.id,
+          userId,
         )
       if (!ingredientExisting) {
         throw new Error(

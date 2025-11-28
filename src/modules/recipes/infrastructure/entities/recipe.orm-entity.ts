@@ -48,7 +48,6 @@ export class RecipeOrmEntity {
       recipeIngredient.recipe,
     {
       cascade: true,
-      onDelete: 'CASCADE',
     },
   )
   recipeIngredients: RecipeIngredientOrmEntity[]
@@ -58,7 +57,6 @@ export class RecipeOrmEntity {
     (recipeStep) => recipeStep.recipe,
     {
       cascade: true,
-      onDelete: 'CASCADE',
     },
   )
   recipeSteps: RecipeStepOrmEntity[]

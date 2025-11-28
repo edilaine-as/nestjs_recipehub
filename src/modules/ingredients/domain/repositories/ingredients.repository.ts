@@ -7,12 +7,13 @@ export interface IngredientRepository {
   delete(id: string): Promise<void>
   findById(
     id: string,
+    userId: string,
   ): Promise<Ingredient | null>
   findByNameAndUserId(
     name: string,
     userId: string,
   ): Promise<Ingredient | null>
-  findAllByUserId(
+  findAll(
     id: string,
   ): Promise<Ingredient[]>
 }

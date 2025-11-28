@@ -23,6 +23,9 @@ export class RecipeStepOrmEntity {
   @ManyToOne(
     () => RecipeOrmEntity,
     (recipe) => recipe.recipeSteps,
+    {
+      onDelete: 'CASCADE',
+    },
   )
   @JoinColumn({ name: 'recipeId' })
   recipe: RecipeOrmEntity

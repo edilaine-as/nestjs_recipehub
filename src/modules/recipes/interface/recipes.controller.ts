@@ -86,7 +86,8 @@ export class RecipesController {
       ingredients: recipe
         .getIngredients()
         .map((ri) => ({
-          id: ri
+          id: ri.getId(),
+          idIngredient: ri
             .getIngredient()
             .getId(),
           name: ri
@@ -123,7 +124,8 @@ export class RecipesController {
         ingredients: recipe
           .getIngredients()
           .map((ri) => ({
-            id: ri
+            id: ri.getId(),
+            idIngredient: ri
               .getIngredient()
               .getId(),
             name: ri

@@ -31,10 +31,14 @@ export class IngredientRepositoryImpl
 
   async findById(
     id: string,
+    userId: string,
   ): Promise<Ingredient | null> {
     const entity =
       await this.ormRepo.findOne({
-        where: { id },
+        where: {
+          id,
+          user: { id: userId },
+        },
         relations: ['user'],
       })
 
@@ -65,7 +69,7 @@ export class IngredientRepositoryImpl
     return this.toDomainEntity(entity)
   }
 
-  async findAllByUserId(
+  async findAll(
     userId: string,
   ): Promise<Ingredient[]> {
     const entities =

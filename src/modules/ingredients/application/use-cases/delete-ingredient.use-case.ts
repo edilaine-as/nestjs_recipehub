@@ -1,5 +1,4 @@
 import {
-  ForbiddenException,
   Inject,
   NotFoundException,
 } from '@nestjs/common'
@@ -19,18 +18,11 @@ export class DeleteIngredientUseCase {
     const ingredient =
       await this.ingredientRepository.findById(
         id,
+        userId,
       )
     if (!ingredient) {
       throw new NotFoundException(
         'Ingredient not found',
-      )
-    }
-
-    if (
-      ingredient.getUserId() !== userId
-    ) {
-      throw new ForbiddenException(
-        'You are not the owner of this ingredient',
       )
     }
 

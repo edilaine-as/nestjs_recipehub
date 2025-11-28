@@ -12,7 +12,7 @@ export class ListRecipesUseCase {
     userId: string,
   ): Promise<Recipe[] | null> {
     const recipes =
-      await this.recipeRepository.findAllByUserId(
+      await this.recipeRepository.findAll(
         userId,
       )
     if (!recipes) {

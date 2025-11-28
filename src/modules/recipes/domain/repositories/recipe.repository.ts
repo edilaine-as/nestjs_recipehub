@@ -5,8 +5,9 @@ export interface RecipeRepository {
   delete(id: string): Promise<void>
   findById(
     id: string,
+    userId: string,
   ): Promise<Recipe | null>
-  findAllByUserId(
-    id: string,
+  findAll(
+    userId: string,
   ): Promise<Recipe[]>
 }

@@ -35,10 +35,14 @@ export class RecipeRepositoryImpl
 
   async findById(
     id: string,
+    userId: string,
   ): Promise<Recipe | null> {
     const entity =
       await this.ormRepo.findOne({
-        where: { id },
+        where: {
+          id,
+          user: { id: userId },
+        },
         relations: [
           'user',
           'recipeIngredients',
@@ -54,7 +58,7 @@ export class RecipeRepositoryImpl
     return this.toDomainEntity(entity)
   }
 
-  async findAllByUserId(
+  async findAll(
     userId: string,
   ): Promise<Recipe[]> {
     const entities =
