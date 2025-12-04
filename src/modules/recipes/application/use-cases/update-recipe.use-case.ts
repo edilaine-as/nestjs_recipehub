@@ -40,6 +40,10 @@ export class UpdateRecipeUseCase {
       recipe.setCategory(input.category)
     }
 
+    await this.recipeRepository.save(
+      recipe,
+    )
+
     return recipe
   }
 }
