@@ -16,7 +16,11 @@ export class RecipeRepositoryImpl
 {
   constructor(
     @InjectRepository(RecipeOrmEntity)
-    private readonly ormRepo: Repository<RecipeOrmEntity>,
+    private readonly recipeOrmRepo: Repository<RecipeOrmEntity>,
+    @InjectRepository(
+      RecipeIngredientOrmEntity,
+    )
+    private readonly recipeIngredientOrmRepo: Repository<RecipeIngredientOrmEntity>,
   ) {}
 
   async save(
@@ -24,13 +28,27 @@ export class RecipeRepositoryImpl
   ): Promise<void> {
     const entity =
       this.toOrmEntity(recipe)
-    await this.ormRepo.save(entity)
+    await this.recipeOrmRepo.save(
+      entity,
+    )
+  }
+
+  async saveRecipeIngredient(
+    ingredient: RecipeIngredient,
+  ): Promise<void> {
+    const entity =
+      this.toOrmRecipeIngredient(
+        ingredient,
+      )
+    await this.recipeIngredientOrmRepo.save(
+      entity,
+    )
   }
 
   async delete(
     id: string,
   ): Promise<void> {
-    await this.ormRepo.delete(id)
+    await this.recipeOrmRepo.delete(id)
   }
 
   async findById(
@@ -38,16 +56,17 @@ export class RecipeRepositoryImpl
     userId: string,
   ): Promise<Recipe | null> {
     const entity =
-      await this.ormRepo.findOne({
+      await this.recipeOrmRepo.findOne({
         where: {
           id,
           user: { id: userId },
         },
         relations: [
           'user',
-          'recipeIngredients',
           'recipeSteps',
+          'recipeIngredients',
           'recipeIngredients.ingredient',
+          'recipeIngredients.recipe',
         ],
       })
 
@@ -62,18 +81,42 @@ export class RecipeRepositoryImpl
     userId: string,
   ): Promise<Recipe[]> {
     const entities =
-      await this.ormRepo.find({
+      await this.recipeOrmRepo.find({
         where: { user: { id: userId } },
         order: { createdAt: 'DESC' },
         relations: [
           'user',
-          'recipeIngredients',
           'recipeSteps',
+          'recipeIngredients',
           'recipeIngredients.ingredient',
+          'recipeIngredients.recipe',
         ],
       })
     return entities.map((entity) =>
       this.toDomainEntity(entity),
+    )
+  }
+
+  async findRecipeIngredientById(
+    id: string,
+  ) {
+    const entity =
+      await this.recipeIngredientOrmRepo.findOne(
+        {
+          where: { id },
+          relations: [
+            'ingredient',
+            'recipe',
+          ],
+        },
+      )
+
+    if (!entity) {
+      return null
+    }
+
+    return this.toDomainEntityRecipeIngredient(
+      entity,
     )
   }
 
@@ -164,6 +207,57 @@ export class RecipeRepositoryImpl
     return entity
   }
 
+  private toOrmRecipeIngredient(
+    recipeIngredient: RecipeIngredient,
+  ) {
+    const ingredientOrm =
+      new IngredientOrmEntity()
+    const ingredient =
+      recipeIngredient.getIngredient()
+
+    ingredientOrm.id =
+      ingredient.getId()
+    ingredientOrm.name =
+      ingredient.getName()
+    ingredientOrm.type =
+      ingredient.getType()
+    ingredientOrm.createdAt =
+      ingredient.getCreatedAt()
+    ingredientOrm.updatedAt =
+      ingredient.getUpdatedAt()
+
+    const recipeOrm =
+      new RecipeOrmEntity()
+    const recipe =
+      recipeIngredient.getRecipe()
+
+    recipeOrm.id = recipe.getId()
+    recipeOrm.title = recipe.getTitle()
+    recipeOrm.category =
+      recipe.getCategory()
+    recipeOrm.createdAt =
+      recipe.getCreatedAt()
+    recipeOrm.updatedAt =
+      recipe.getUpdatedAt()
+
+    const entity =
+      new RecipeIngredientOrmEntity()
+
+    entity.id = recipeIngredient.getId()
+    entity.ingredient = ingredientOrm
+    entity.recipe = recipeOrm
+    entity.quantity =
+      recipeIngredient.getQuantity()
+    entity.unit =
+      recipeIngredient.getUnit()
+    entity.createdAt =
+      recipeIngredient.getCreatedAt()
+    entity.updatedAt =
+      recipeIngredient.getUpdatedAt()
+
+    return entity
+  }
+
   private toDomainEntity(
     entity: RecipeOrmEntity,
   ): Recipe {
@@ -186,6 +280,20 @@ export class RecipeRepositoryImpl
               updatedAt:
                 ri.ingredient.updatedAt,
             }),
+          recipe: Recipe.restore({
+            id: ri.recipe.id,
+            title: ri.recipe.title,
+            category:
+              ri.recipe.category,
+            userId:
+              ri.recipe.user?.id ?? '',
+            ingredients: [],
+            steps: [],
+            createdAt:
+              ri.recipe.createdAt,
+            updatedAt:
+              ri.recipe.updatedAt,
+          }),
           quantity: ri.quantity,
           unit: ri.unit,
           createdAt: ri.createdAt,
@@ -214,6 +322,43 @@ export class RecipeRepositoryImpl
       updatedAt: entity.updatedAt,
       ingredients,
       steps,
+    })
+  }
+
+  private toDomainEntityRecipeIngredient(
+    entity: RecipeIngredientOrmEntity,
+  ) {
+    const ri = entity.ingredient
+    const ingredient =
+      Ingredient.restore({
+        id: ri.id,
+        name: ri.name,
+        type: ri.type,
+        userId: ri.user?.id ?? '',
+        createdAt: ri.createdAt,
+        updatedAt: ri.updatedAt,
+      })
+
+    const r = entity.recipe
+    const recipe = Recipe.restore({
+      id: r.id,
+      title: r.title,
+      category: r.category,
+      userId: r.user?.id ?? '',
+      ingredients: [],
+      steps: [],
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    })
+
+    return RecipeIngredient.restore({
+      id: entity.id,
+      ingredient,
+      recipe,
+      quantity: entity.quantity,
+      unit: entity.unit,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     })
   }
 }

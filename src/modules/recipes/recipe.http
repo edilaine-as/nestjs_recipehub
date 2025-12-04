@@ -1,26 +1,26 @@
 ### Listando receitas por usuário
 GET http://localhost:3333/recipes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
 
 ### Listar receita por ID
 GET http://localhost:3333/recipes/c801daf5-bdd7-495e-b8b7-985a74419080
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
 
 ### Criar receita (POST)
 POST http://localhost:3333/recipes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
 
 {
-  "title": "torta doce",
+  "title": "torta salgada",
   "category": "dessert",
   "userId": "5002f32a-6e78-4c0a-9bed-93577581fcdb"
 }
 
 ### Criar ingredientes da receita (POST)
-POST http://localhost:3333/recipes/9044f711-c0b0-4752-a26d-63b953397831/ingredients
+POST http://localhost:3333/recipes/ba207fdc-2436-4580-aabd-a50010b84374/ingredients
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
 
 {
   "name": "oléo",
@@ -30,9 +30,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZ
 }
 
 ### Criar passos da receita (POST)
-POST http://localhost:3333/recipes/9044f711-c0b0-4752-a26d-63b953397831/steps
+POST http://localhost:3333/recipes/ba207fdc-2436-4580-aabd-a50010b84374/steps
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
 
 {
   "step": 1,
@@ -40,14 +40,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZ
 }
 
 ### Atualizar receita (PUT)
-PUT http://localhost:3333/recipes/9044f711-c0b0-4752-a26d-63b953397831
+PUT http://localhost:3333/recipes/c801daf5-bdd7-495e-b8b7-985a74419080
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
 
 {
-  "title": "torta"
+  "title": "torta doce"
+}
+
+### Atualizar ingredientes da receita (PUT)
+PUT http://localhost:3333/recipes/858f1a08-7a77-4d98-a2f7-bf02169b926d/ingredients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E
+
+{
+  "quantity": "3"
 }
 
 ### Deletar receita (DELETE)
 DELETE http://localhost:3333/recipes/9044f711-c0b0-4752-a26d-63b953397831
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQzMzUwNDEsImV4cCI6MTc2NDMzODY0MX0.rrUB1Emu-xkg5YiZSxjCtIqvo4OIOi6KvdOYhPY-wD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4MTM5MzMsImV4cCI6MTc2NDgxNzUzM30.2S7TTjfMExcyaK1P7v-NT_gLx2q08qBE6Xg7hbhI94E

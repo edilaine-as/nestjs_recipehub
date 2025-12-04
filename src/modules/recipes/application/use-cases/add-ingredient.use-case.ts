@@ -94,6 +94,7 @@ export class AddIngredientUseCase {
 
     recipe.addIngredient(
       ingredient,
+      recipe,
       input.quantity,
       input.unit,
     )

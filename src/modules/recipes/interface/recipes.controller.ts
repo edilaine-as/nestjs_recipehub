@@ -21,6 +21,7 @@ import { AddIngredientUseCase } from '../application/use-cases/add-ingredient.us
 import { AddStepUseCase } from '../application/use-cases/add-step.use-case'
 import { RecipeIngredientUnit } from '../shared/enums/recipe-ingredient-unit.enum'
 import { UpdateRecipeUseCase } from '../application/use-cases/update-recipe.use-case'
+import { UpdateIngredientUseCase } from '../application/use-cases/update-ingredient.use-case'
 
 class CreateRecipeDto {
   title: string
@@ -46,6 +47,12 @@ class UpdateRecipeDto {
   category?: RecipeCategory
 }
 
+class UpdateRecipeIngredientDto {
+  id?: string // ingredient
+  quantity?: number
+  unit?: RecipeIngredientUnit
+}
+
 @UseGuards(JwtAuthGuard)
 @Controller('recipes')
 export class RecipesController {
@@ -54,6 +61,7 @@ export class RecipesController {
     private readonly addIngredientUseCase: AddIngredientUseCase,
     private readonly addStepUseCase: AddStepUseCase,
     private readonly updateRecipeUseCase: UpdateRecipeUseCase,
+    private readonly updateIngredientUseCase: UpdateIngredientUseCase,
     private readonly deleteRecipeUseCase: DeleteRecipeUseCase,
     private readonly getRecipeUseCase: GetRecipeByIdUseCase,
     private readonly listRecipesUseCase: ListRecipesUseCase,
@@ -242,6 +250,27 @@ export class RecipesController {
         userId,
       )
     return recipe
+  }
+
+  @Put(':id/ingredients')
+  async updateIngredient(
+    @Param('id') id: string,
+    @Body()
+    body: UpdateRecipeIngredientDto,
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
+  ) {
+    const userId = req.user.userId
+
+    const recipeIngredient =
+      await this.updateIngredientUseCase.execute(
+        id,
+        body,
+        userId,
+      )
+    return recipeIngredient
   }
 
   @Delete(':id')

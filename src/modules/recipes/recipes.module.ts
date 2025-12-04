@@ -13,6 +13,7 @@ import { IngredientsModule } from '../ingredients/ingredients.module'
 import { AddIngredientUseCase } from './application/use-cases/add-ingredient.use-case'
 import { AddStepUseCase } from './application/use-cases/add-step.use-case'
 import { RecipeStepOrmEntity } from './infrastructure/entities/recipe-step.orm-entity'
+import { UpdateIngredientUseCase } from './application/use-cases/update-ingredient.use-case'
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RecipeStepOrmEntity } from './infrastructure/entities/recipe-step.orm-e
     AddIngredientUseCase,
     AddStepUseCase,
     UpdateRecipeUseCase,
+    UpdateIngredientUseCase,
     DeleteRecipeUseCase,
     GetRecipeByIdUseCase,
     ListRecipesUseCase,

@@ -1,10 +1,12 @@
 import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.entity'
 import { v4 as uuidv4 } from 'uuid'
 import { RecipeIngredientUnit } from '../../shared/enums/recipe-ingredient-unit.enum'
+import { Recipe } from './recipe.entity'
 
 export class RecipeIngredient {
   private readonly id: string
   private ingredient: Ingredient
+  private recipe: Recipe
   private quantity: number
   private unit: RecipeIngredientUnit
   private readonly createdAt: Date
@@ -12,6 +14,7 @@ export class RecipeIngredient {
 
   private constructor(
     ingredient: Ingredient,
+    recipe: Recipe,
     quantity: number,
     unit: RecipeIngredientUnit,
     id?: string,
@@ -19,6 +22,7 @@ export class RecipeIngredient {
     updatedAt?: Date,
   ) {
     this.ingredient = ingredient
+    this.recipe = recipe
     this.quantity = quantity
     this.unit = unit
     this.id = id ?? uuidv4()
@@ -30,11 +34,13 @@ export class RecipeIngredient {
 
   static create(props: {
     ingredient: Ingredient
+    recipe: Recipe
     quantity: number
     unit: RecipeIngredientUnit
   }) {
     return new RecipeIngredient(
       props.ingredient,
+      props.recipe,
       props.quantity,
       props.unit,
     )
@@ -43,6 +49,7 @@ export class RecipeIngredient {
   static restore(props: {
     id: string
     ingredient: Ingredient
+    recipe: Recipe
     quantity: number
     unit: RecipeIngredientUnit
     createdAt: Date
@@ -50,6 +57,7 @@ export class RecipeIngredient {
   }): RecipeIngredient {
     return new RecipeIngredient(
       props.ingredient,
+      props.recipe,
       props.quantity,
       props.unit,
       props.id,
@@ -68,6 +76,10 @@ export class RecipeIngredient {
 
   getIngredient(): Ingredient {
     return this.ingredient
+  }
+
+  getRecipe(): Recipe {
+    return this.recipe
   }
 
   getQuantity() {
@@ -93,6 +105,13 @@ export class RecipeIngredient {
 
   setUnit(unit: RecipeIngredientUnit) {
     this.unit = unit
+    this.touchUpdatedAt()
+  }
+
+  setIngredient(
+    ingredient: Ingredient,
+  ) {
+    this.ingredient = ingredient
     this.touchUpdatedAt()
   }
 }
