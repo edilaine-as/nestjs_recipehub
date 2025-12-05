@@ -1,10 +1,14 @@
 import { RecipeIngredient } from '../entities/recipe-ingredient.entity'
+import { RecipeStep } from '../entities/recipe-step.entity'
 import { Recipe } from '../entities/recipe.entity'
 
 export interface RecipeRepository {
   save(recipe: Recipe): Promise<void>
   saveRecipeIngredient(
     ingredient: RecipeIngredient,
+  ): Promise<void>
+  saveRecipeStep(
+    step: RecipeStep,
   ): Promise<void>
   delete(id: string): Promise<void>
   findById(
@@ -17,4 +21,7 @@ export interface RecipeRepository {
   findRecipeIngredientById(
     id: string,
   ): Promise<RecipeIngredient | null>
+  findRecipeStepById(
+    id: string,
+  ): Promise<RecipeStep | null>
 }

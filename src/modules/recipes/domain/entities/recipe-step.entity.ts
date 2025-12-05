@@ -12,12 +12,14 @@ export class RecipeStep {
   private constructor(
     step: number,
     description: string,
+    recipe: Recipe,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
   ) {
     this.step = step
     this.description = description
+    this.recipe = recipe
     this.id = id ?? uuidv4()
     this.createdAt =
       createdAt ?? new Date()
@@ -28,10 +30,12 @@ export class RecipeStep {
   static create(props: {
     step: number
     description: string
+    recipe: Recipe
   }) {
     return new RecipeStep(
       props.step,
       props.description,
+      props.recipe,
     )
   }
 
@@ -39,12 +43,14 @@ export class RecipeStep {
     id: string
     step: number
     description: string
+    recipe: Recipe
     createdAt: Date
     updatedAt: Date
   }): RecipeStep {
     return new RecipeStep(
       props.step,
       props.description,
+      props.recipe,
       props.id,
       props.createdAt,
       props.updatedAt,
@@ -67,17 +73,16 @@ export class RecipeStep {
     return this.description
   }
 
+  getRecipe(): Recipe {
+    return this.recipe
+  }
+
   getCreatedAt() {
     return this.createdAt
   }
 
   getUpdatedAt() {
     return this.updatedAt
-  }
-
-  setStep(step: number) {
-    this.step = step
-    this.touchUpdatedAt()
   }
 
   setDescription(description: string) {

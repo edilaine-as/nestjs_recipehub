@@ -22,6 +22,7 @@ import { AddStepUseCase } from '../application/use-cases/add-step.use-case'
 import { RecipeIngredientUnit } from '../shared/enums/recipe-ingredient-unit.enum'
 import { UpdateRecipeUseCase } from '../application/use-cases/update-recipe.use-case'
 import { UpdateIngredientUseCase } from '../application/use-cases/update-ingredient.use-case'
+import { UpdateStepUseCase } from '../application/use-cases/update-step.use-case'
 
 class CreateRecipeDto {
   title: string
@@ -53,6 +54,10 @@ class UpdateRecipeIngredientDto {
   unit?: RecipeIngredientUnit
 }
 
+class UpdateStepDto {
+  description: string
+}
+
 @UseGuards(JwtAuthGuard)
 @Controller('recipes')
 export class RecipesController {
@@ -62,6 +67,7 @@ export class RecipesController {
     private readonly addStepUseCase: AddStepUseCase,
     private readonly updateRecipeUseCase: UpdateRecipeUseCase,
     private readonly updateIngredientUseCase: UpdateIngredientUseCase,
+    private readonly updateStepUseCase: UpdateStepUseCase,
     private readonly deleteRecipeUseCase: DeleteRecipeUseCase,
     private readonly getRecipeUseCase: GetRecipeByIdUseCase,
     private readonly listRecipesUseCase: ListRecipesUseCase,
@@ -271,6 +277,24 @@ export class RecipesController {
         userId,
       )
     return recipeIngredient
+  }
+
+  @Put(':id/steps')
+  async updateStep(
+    @Param('id') id: string,
+    @Body() body: UpdateStepDto,
+    // @Request()
+    // req: Request & {
+    //   user: JwtPayloadDto
+    // },
+  ) {
+    const recipeStep =
+      await this.updateStepUseCase.execute(
+        id,
+        body,
+      )
+
+    return recipeStep
   }
 
   @Delete(':id')
