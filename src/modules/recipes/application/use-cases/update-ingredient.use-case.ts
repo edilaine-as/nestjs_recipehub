@@ -29,6 +29,7 @@ export class UpdateIngredientUseCase {
     const recipeIngredient =
       await this.recipeRepository.findRecipeIngredientById(
         id,
+        userId,
       )
 
     if (!recipeIngredient) {

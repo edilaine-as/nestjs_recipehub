@@ -20,8 +20,10 @@ export interface RecipeRepository {
   ): Promise<Recipe[]>
   findRecipeIngredientById(
     id: string,
+    userId: string,
   ): Promise<RecipeIngredient | null>
   findRecipeStepById(
     id: string,
+    userId: string,
   ): Promise<RecipeStep | null>
 }

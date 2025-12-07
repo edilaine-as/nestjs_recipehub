@@ -17,10 +17,12 @@ export class UpdateStepUseCase {
   async execute(
     id: string,
     input: UpdateStepInput,
+    userId: string,
   ) {
     const recipeStep =
       await this.recipeRepository.findRecipeStepById(
         id,
+        userId,
       )
 
     if (!recipeStep) {

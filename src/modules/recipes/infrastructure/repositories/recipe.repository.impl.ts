@@ -116,11 +116,17 @@ export class RecipeRepositoryImpl
 
   async findRecipeIngredientById(
     id: string,
+    userId: string,
   ) {
     const entity =
       await this.recipeIngredientOrmRepo.findOne(
         {
-          where: { id },
+          where: {
+            id,
+            recipe: {
+              user: { id: userId },
+            },
+          },
           relations: [
             'ingredient',
             'recipe',
@@ -137,11 +143,19 @@ export class RecipeRepositoryImpl
     )
   }
 
-  async findRecipeStepById(id: string) {
+  async findRecipeStepById(
+    id: string,
+    userId: string,
+  ) {
     const entity =
       await this.recipeStepOrmRepo.findOne(
         {
-          where: { id },
+          where: {
+            id,
+            recipe: {
+              user: { id: userId },
+            },
+          },
           relations: ['recipe'],
         },
       )

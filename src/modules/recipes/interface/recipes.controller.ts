@@ -283,15 +283,18 @@ export class RecipesController {
   async updateStep(
     @Param('id') id: string,
     @Body() body: UpdateStepDto,
-    // @Request()
-    // req: Request & {
-    //   user: JwtPayloadDto
-    // },
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
   ) {
+    const userId = req.user.userId
+
     const recipeStep =
       await this.updateStepUseCase.execute(
         id,
         body,
+        userId,
       )
 
     return recipeStep
