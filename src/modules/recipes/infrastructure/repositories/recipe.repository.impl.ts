@@ -197,6 +197,31 @@ export class RecipeRepositoryImpl
     return true
   }
 
+  async hasRecipeStepByNumber(
+    recipeId: string,
+    step: number,
+    userId: string,
+  ) {
+    const entity =
+      await this.recipeStepOrmRepo.findOne(
+        {
+          where: {
+            recipe: {
+              id: recipeId,
+              user: { id: userId },
+            },
+            stepNumber: step,
+          },
+        },
+      )
+
+    if (!entity) {
+      return false
+    }
+
+    return true
+  }
+
   async findRecipeStepById(
     id: string,
     userId: string,

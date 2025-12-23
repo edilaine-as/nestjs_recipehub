@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Inject,
   NotFoundException,
 } from '@nestjs/common'
@@ -29,6 +30,19 @@ export class AddStepUseCase {
       throw new NotFoundException(
         'Recipe not found',
       )
+
+    const recipeStepByNumberExisting =
+      await this.recipeRepository.hasRecipeStepByNumber(
+        id,
+        input.step,
+        userId,
+      )
+
+    if (recipeStepByNumberExisting) {
+      throw new ConflictException(
+        `Step already exists in this recipe.`,
+      )
+    }
 
     recipe.addStep(
       input.step,

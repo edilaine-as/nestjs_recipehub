@@ -36,4 +36,9 @@ export interface RecipeRepository {
     name: string,
     userId: string,
   ): Promise<boolean>
+  hasRecipeStepByNumber(
+    recipeId: string,
+    step: number,
+    userId: string,
+  ): Promise<boolean>
 }
