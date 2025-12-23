@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Inject,
   NotFoundException,
 } from '@nestjs/common'
@@ -48,10 +49,26 @@ export class AddIngredientUseCase {
           userId,
         )
       if (!ingredientExisting) {
-        throw new Error(
+        throw new NotFoundException(
           `Ingredient with id ${input.id} not found`,
         )
       }
+
+      const recipeIngredientByIdExisting =
+        await this.recipeRepository.hasRecipeIngredientById(
+          id,
+          input.id,
+          userId,
+        )
+
+      if (
+        recipeIngredientByIdExisting
+      ) {
+        throw new ConflictException(
+          `Ingredient already exists in this recipe.`,
+        )
+      }
+
       ingredient = ingredientExisting
     } else if (input.name) {
       const ingredientByNameExisting =
@@ -74,6 +91,21 @@ export class AddIngredientUseCase {
           ingredient,
         )
       } else {
+        const recipeIngredientByNameExisting =
+          await this.recipeRepository.hasRecipeIngredientByName(
+            id,
+            input.name,
+            userId,
+          )
+
+        if (
+          recipeIngredientByNameExisting
+        ) {
+          throw new ConflictException(
+            `Ingredient already exists in this recipe.`,
+          )
+        }
+
         ingredient =
           ingredientByNameExisting
       }
@@ -94,7 +126,6 @@ export class AddIngredientUseCase {
 
     recipe.addIngredient(
       ingredient,
-      recipe,
       input.quantity,
       input.unit,
     )

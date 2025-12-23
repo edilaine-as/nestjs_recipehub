@@ -77,14 +77,13 @@ export class Recipe {
 
   addIngredient(
     ingredient: Ingredient,
-    recipe: Recipe,
     quantity: number,
     unit: RecipeIngredientUnit,
   ) {
     const newRecipeIngredient =
       RecipeIngredient.create({
         ingredient,
-        recipe,
+        recipe: this,
         quantity,
         unit,
       })

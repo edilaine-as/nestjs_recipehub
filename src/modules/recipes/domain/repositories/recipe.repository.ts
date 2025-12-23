@@ -26,4 +26,14 @@ export interface RecipeRepository {
     id: string,
     userId: string,
   ): Promise<RecipeStep | null>
+  hasRecipeIngredientById(
+    recipeId: string,
+    ingredientId: string,
+    userId: string,
+  ): Promise<boolean>
+  hasRecipeIngredientByName(
+    recipeId: string,
+    name: string,
+    userId: string,
+  ): Promise<boolean>
 }

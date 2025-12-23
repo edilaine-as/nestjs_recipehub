@@ -143,6 +143,60 @@ export class RecipeRepositoryImpl
     )
   }
 
+  async hasRecipeIngredientById(
+    recipeId: string,
+    ingredientId: string,
+    userId: string,
+  ) {
+    const entity =
+      await this.recipeIngredientOrmRepo.findOne(
+        {
+          where: {
+            recipe: {
+              id: recipeId,
+              user: { id: userId },
+            },
+            ingredient: {
+              id: ingredientId,
+            },
+          },
+        },
+      )
+
+    if (!entity) {
+      return false
+    }
+
+    return true
+  }
+
+  async hasRecipeIngredientByName(
+    recipeId: string,
+    name: string,
+    userId: string,
+  ) {
+    const entity =
+      await this.recipeIngredientOrmRepo.findOne(
+        {
+          where: {
+            recipe: {
+              id: recipeId,
+              user: { id: userId },
+            },
+            ingredient: {
+              name: name,
+            },
+          },
+        },
+      )
+
+    if (!entity) {
+      return false
+    }
+
+    return true
+  }
+
   async findRecipeStepById(
     id: string,
     userId: string,
