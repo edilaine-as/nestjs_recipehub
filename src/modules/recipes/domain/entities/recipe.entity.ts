@@ -98,13 +98,12 @@ export class Recipe {
   addStep(
     step: number,
     description: string,
-    recipe: Recipe,
   ) {
     const newRecipeStep =
       RecipeStep.create({
         step,
         description,
-        recipe,
+        recipe: this,
       })
 
     this.steps.push(newRecipeStep)

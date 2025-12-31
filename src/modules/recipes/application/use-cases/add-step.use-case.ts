@@ -47,7 +47,6 @@ export class AddStepUseCase {
     recipe.addStep(
       input.step,
       input.description,
-      recipe,
     )
 
     await this.recipeRepository.save(
