@@ -68,7 +68,7 @@ export class Ingredient {
 
   setType(type: IngredientType) {
     this.type = type
-    this.getUpdatedAt()
+    this.touchUpdatedAt()
   }
 
   getId() {
