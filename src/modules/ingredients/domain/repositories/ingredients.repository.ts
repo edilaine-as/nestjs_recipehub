@@ -14,6 +14,6 @@ export interface IngredientRepository {
     userId: string,
   ): Promise<Ingredient | null>
   findAll(
-    id: string,
+    userId: string,
   ): Promise<Ingredient[]>
 }
