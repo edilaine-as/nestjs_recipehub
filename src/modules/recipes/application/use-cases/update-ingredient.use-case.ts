@@ -8,7 +8,7 @@ import { RecipeIngredientUnit } from '../../shared/enums/recipe-ingredient-unit.
 import { Ingredient } from 'src/modules/ingredients/domain/entities/ingredient.entity'
 
 interface UpdateIngredientInput {
-  id?: string // ingredient
+  ingredientId?: string // ingredient
   quantity?: number
   unit?: RecipeIngredientUnit
 }
@@ -41,27 +41,33 @@ export class UpdateIngredientUseCase {
     let ingredient: Ingredient | null =
       null
 
-    if (input.id) {
+    if (input.ingredientId) {
       const ingredientExisting =
         await this.ingredientsRepository.findById(
-          input.id,
+          input.ingredientId,
           userId,
         )
       if (!ingredientExisting) {
-        throw new Error(
-          `Ingredient with id ${input.id} not found`,
+        throw new NotFoundException(
+          `Ingredient with id ${input.ingredientId} not found`,
         )
       }
       ingredient = ingredientExisting
     }
 
-    if (ingredient) {
+    if (
+      ingredient &&
+      ingredient.getId() !==
+        recipeIngredient
+          .getIngredient()
+          .getId()
+    ) {
       recipeIngredient.setIngredient(
         ingredient,
       )
     }
 
-    if (input.quantity) {
+    if (input.quantity !== undefined) {
       recipeIngredient.setQuantity(
         input.quantity,
       )
