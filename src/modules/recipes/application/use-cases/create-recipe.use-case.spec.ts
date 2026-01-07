@@ -31,7 +31,7 @@ describe('CreateRecipeUseCase', () => {
         userId,
       )
 
-    expect(recipe).not.toBeNull()
+    expect(storedRecipe).not.toBeNull()
     expect(
       storedRecipe?.getTitle(),
     ).toBe('Pancake')
