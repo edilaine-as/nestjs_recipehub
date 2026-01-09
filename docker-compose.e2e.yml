@@ -1,0 +1,13 @@
+services:
+  postgres-e2e:
+    image: postgres:17
+    container_name: recipehub-db-e2e
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    env_file:
+      - .env.e2e
+    volumes:
+      - recipehub_db_data_e2e:/var/lib/postgresql/data
+
+volumes:
+  recipehub_db_data_e2e:

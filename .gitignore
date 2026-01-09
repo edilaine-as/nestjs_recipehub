@@ -5,6 +5,7 @@
 
 # dotenv environment variable files
 .env
+.env.e2e
 
 # archives 
 requirements.txt

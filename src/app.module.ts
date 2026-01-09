@@ -12,7 +12,10 @@ import { IngredientsModule } from './modules/ingredients/ingredients.module'
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath:
+        process.env.NODE_ENV === 'test'
+          ? '.env.e2e'
+          : '.env',
     }), // disponibiliza process.env em todo o app
     TypeOrmModule.forRoot({
       type: 'postgres',
