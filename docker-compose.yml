@@ -5,8 +5,6 @@ services:
     restart: no
     ports:
       - "${POSTGRES_PORT}:5432"
-    env_file:
-      - .env
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -20,8 +18,6 @@ services:
     restart: no
     ports:
       - "5050:80"
-    env_file:
-      - .env
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
