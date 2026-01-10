@@ -7,17 +7,38 @@ import {
 } from '@nestjs/common'
 import { CreateUserUseCase } from '../application/use-cases/create-user.use-case'
 import { UpdateUserUseCase } from '../application/use-cases/update-user.use-case'
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator'
 
 class CreateUserDto {
+  @IsString()
   name: string
+
+  @IsEmail()
   email: string
+
+  @IsString()
+  @MinLength(6)
   password: string
 }
 
 class UpdateUserDto {
-  name: string
-  email: string
-  password: string
+  @IsOptional()
+  @IsString()
+  name?: string
+
+  @IsOptional()
+  @IsEmail()
+  email?: string
+
+  @IsOptional()
+  @IsString()
+  @MinLength(6)
+  password?: string
 }
 
 @Controller('users')

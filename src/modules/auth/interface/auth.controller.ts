@@ -4,9 +4,18 @@ import {
   Post,
 } from '@nestjs/common'
 import { LoginUseCase } from '../application/use-cases/login.use-case'
+import {
+  IsEmail,
+  IsString,
+  MinLength,
+} from 'class-validator'
 
 class loginUserDto {
+  @IsEmail()
   email: string
+
+  @IsString()
+  @MinLength(6)
   password: string
 }
 

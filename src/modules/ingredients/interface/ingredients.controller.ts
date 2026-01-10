@@ -17,16 +17,32 @@ import { ListIngredientsUseCase } from '../application/use-cases/list-ingredient
 import { CreateIngredientUseCase } from '../application/use-cases/create-ingredient.use-case'
 import { IngredientType } from '../shared/enums/ingredient-type.enum'
 import { UpdateIngredientUseCase } from '../application/use-cases/update-ingredient.use-case'
+import {
+  IsEnum,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator'
 
 class CreateIngredientDto {
+  @IsString()
   name: string
+
+  @IsEnum(IngredientType)
   type: IngredientType
+
+  @IsUUID()
   userId: string
 }
 
 class UpdateIngredientDto {
-  name: string
-  type: IngredientType
+  @IsOptional()
+  @IsString()
+  name?: string
+
+  @IsOptional()
+  @IsEnum(IngredientType)
+  type?: IngredientType
 }
 
 @UseGuards(JwtAuthGuard)

@@ -23,38 +23,83 @@ import { RecipeIngredientUnit } from '../shared/enums/recipe-ingredient-unit.enu
 import { UpdateRecipeUseCase } from '../application/use-cases/update-recipe.use-case'
 import { UpdateIngredientUseCase } from '../application/use-cases/update-ingredient.use-case'
 import { UpdateStepUseCase } from '../application/use-cases/update-step.use-case'
+import {
+  IsEnum,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+  Min,
+} from 'class-validator'
 
 class CreateRecipeDto {
+  @IsString()
   title: string
+
+  @IsEnum(RecipeCategory)
   category: RecipeCategory
+
+  @IsUUID()
   userId: string
 }
 
 class AddIngredientDto {
+  @IsOptional()
+  @IsUUID()
   id?: string
+
+  @IsString()
   name: string
+
+  @IsEnum(IngredientType)
   type: IngredientType
+
+  @IsNumber()
+  @IsPositive()
   quantity: number
+
+  @IsEnum(RecipeIngredientUnit)
   unit: RecipeIngredientUnit
 }
 
 class AddStepDto {
+  @IsInt()
+  @Min(1)
   step: number
+
+  @IsString()
   description: string
 }
 
 class UpdateRecipeDto {
+  @IsOptional()
+  @IsString()
   title?: string
+
+  @IsOptional()
+  @IsString()
   category?: RecipeCategory
 }
 
 class UpdateRecipeIngredientDto {
+  @IsOptional()
+  @IsUUID()
   id?: string // ingredient
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
   quantity?: number
+
+  @IsOptional()
+  @IsEnum(RecipeIngredientUnit)
   unit?: RecipeIngredientUnit
 }
 
 class UpdateStepDto {
+  @IsString()
   description: string
 }
 
