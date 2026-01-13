@@ -40,9 +40,6 @@ class CreateRecipeDto {
 
   @IsEnum(RecipeCategory)
   category: RecipeCategory
-
-  @IsUUID()
-  userId: string
 }
 
 class AddIngredientDto {
@@ -220,10 +217,19 @@ export class RecipesController {
   @Post()
   async createRecipe(
     @Body() body: CreateRecipeDto,
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
   ) {
+    const userId = req.user.userId
+
     const recipe =
       await this.createRecipeUseCase.execute(
-        body,
+        {
+          ...body,
+          userId,
+        },
       )
     return {
       id: recipe.getId(),
