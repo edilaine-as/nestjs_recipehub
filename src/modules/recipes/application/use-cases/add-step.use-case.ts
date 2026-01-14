@@ -44,7 +44,7 @@ export class AddStepUseCase {
       )
     }
 
-    recipe.addStep(
+    const recipeStep = recipe.addStep(
       input.step,
       input.description,
     )
@@ -52,5 +52,7 @@ export class AddStepUseCase {
     await this.recipeRepository.save(
       recipe,
     )
+
+    return recipeStep
   }
 }

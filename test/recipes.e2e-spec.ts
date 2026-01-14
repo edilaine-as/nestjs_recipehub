@@ -346,4 +346,214 @@ describe('AuthController (e2e)', () => {
       'Step already exists in this recipe.',
     )
   })
+
+  it('should update a recipe', async () => {
+    const token =
+      await createUserAndLogin(server)
+
+    const recipe = await request(server)
+      .post('/recipes')
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        title: 'lasagna',
+        category: 'main_dish',
+      })
+
+    const recipeId = recipe.body.id
+
+    const response = await request(
+      server,
+    )
+      .put(`/recipes/${recipeId}`)
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        title: 'Lasanha',
+      })
+      .expect(200)
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        title: 'Lasanha',
+        category: 'main_dish',
+        userId: expect.any(String),
+      }),
+    )
+  })
+
+  it('should update recipe ingredient', async () => {
+    const token =
+      await createUserAndLogin(server)
+
+    const recipe = await request(server)
+      .post('/recipes')
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        title: 'lasagna',
+        category: 'main_dish',
+      })
+
+    const recipeId = recipe.body.id
+
+    const recipeIngredient =
+      await request(server)
+        .post(
+          `/recipes/${recipeId}/ingredients`,
+        )
+        .set(
+          'Authorization',
+          `Bearer ${token}`,
+        )
+        .send({
+          name: 'Cheese',
+          type: 'dairy',
+          quantity: 200,
+          unit: 'gram',
+        })
+
+    const recipeIngredientId =
+      recipeIngredient.body.ingredient
+        .id
+
+    const response = await request(
+      server,
+    )
+      .put(
+        `/recipes/${recipeIngredientId}/ingredients`,
+      )
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        unit: 'milliliter',
+      })
+      .expect(200)
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        quantity: 200,
+        unit: 'milliliter',
+        ingredient: {
+          id: expect.any(String),
+          name: 'Cheese',
+          type: 'dairy',
+        },
+        recipe: {
+          id: expect.any(String),
+          title: 'lasagna',
+          category: 'main_dish',
+          userId: expect.any(String),
+        },
+      }),
+    )
+  })
+
+  it('should update recipe step', async () => {
+    const token =
+      await createUserAndLogin(server)
+
+    const recipe = await request(server)
+      .post('/recipes')
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        title: 'lasagna',
+        category: 'main_dish',
+      })
+
+    const recipeId = recipe.body.id
+
+    const recipeStep = await request(
+      server,
+    )
+      .post(
+        `/recipes/${recipeId}/steps`,
+      )
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        step: 1,
+        description: 'Passo 1',
+      })
+
+    const recipeStepId =
+      recipeStep.body.step.id
+
+    const response = await request(
+      server,
+    )
+      .put(
+        `/recipes/${recipeStepId}/steps`,
+      )
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        description:
+          'Passo 1 atualizado',
+      })
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        step: 1,
+        description:
+          'Passo 1 atualizado',
+        recipe: {
+          id: expect.any(String),
+          title: 'lasagna',
+          category: 'main_dish',
+          userId: expect.any(String),
+        },
+      }),
+    )
+  })
+
+  it('should delete a recipe', async () => {
+    const token =
+      await createUserAndLogin(server)
+
+    const recipe = await request(server)
+      .post('/recipes')
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .send({
+        title: 'lasagna',
+        category: 'main_dish',
+      })
+
+    const recipeId = recipe.body.id
+
+    const response = await request(
+      server,
+    )
+      .delete(`/recipes/${recipeId}`)
+      .set(
+        'Authorization',
+        `Bearer ${token}`,
+      )
+      .expect(200)
+
+    expect(response.body.message).toBe(
+      'Recipe deleted successfully',
+    )
+  })
 })

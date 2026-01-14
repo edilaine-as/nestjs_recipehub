@@ -260,7 +260,23 @@ export class RecipesController {
     return {
       message:
         'Ingredient added successfully',
-      ingredient,
+      ingredient: {
+        id: ingredient.getId(),
+        quantity:
+          ingredient.getQuantity(),
+        unit: ingredient.getUnit(),
+        ingredient: {
+          id: ingredient
+            .getIngredient()
+            .getId(),
+          name: ingredient
+            .getIngredient()
+            .getName(),
+          type: ingredient
+            .getIngredient()
+            .getType(),
+        },
+      },
     }
   }
 
@@ -285,7 +301,12 @@ export class RecipesController {
     return {
       message:
         'Step added successfully',
-      step,
+      step: {
+        id: step.getId(),
+        step: step.getStep(),
+        description:
+          step.getDescription(),
+      },
     }
   }
 
@@ -327,7 +348,39 @@ export class RecipesController {
         body,
         userId,
       )
-    return recipeIngredient
+
+    return {
+      id: recipeIngredient.getId(),
+      quantity: Number(
+        recipeIngredient.getQuantity(),
+      ),
+      unit: recipeIngredient.getUnit(),
+      ingredient: {
+        id: recipeIngredient
+          .getIngredient()
+          .getId(),
+        name: recipeIngredient
+          .getIngredient()
+          .getName(),
+        type: recipeIngredient
+          .getIngredient()
+          .getType(),
+      },
+      recipe: {
+        id: recipeIngredient
+          .getRecipe()
+          .getId(),
+        title: recipeIngredient
+          .getRecipe()
+          .getTitle(),
+        category: recipeIngredient
+          .getRecipe()
+          .getCategory(),
+        userId: recipeIngredient
+          .getRecipe()
+          .getUserId(),
+      },
+    }
   }
 
   @Put(':id/steps')
@@ -348,7 +401,26 @@ export class RecipesController {
         userId,
       )
 
-    return recipeStep
+    return {
+      id: recipeStep.getId(),
+      step: recipeStep.getStep(),
+      description:
+        recipeStep.getDescription(),
+      recipe: {
+        id: recipeStep
+          .getRecipe()
+          .getId(),
+        title: recipeStep
+          .getRecipe()
+          .getTitle(),
+        category: recipeStep
+          .getRecipe()
+          .getCategory(),
+        userId: recipeStep
+          .getRecipe()
+          .getUserId(),
+      },
+    }
   }
 
   @Delete(':id')

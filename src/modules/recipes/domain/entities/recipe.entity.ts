@@ -93,6 +93,8 @@ export class Recipe {
     )
 
     this.touchUpdatedAt()
+
+    return newRecipeIngredient
   }
 
   addStep(
@@ -109,6 +111,8 @@ export class Recipe {
     this.steps.push(newRecipeStep)
 
     this.touchUpdatedAt()
+
+    return newRecipeStep
   }
 
   private touchUpdatedAt() {

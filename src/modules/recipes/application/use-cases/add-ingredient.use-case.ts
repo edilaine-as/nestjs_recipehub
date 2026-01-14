@@ -124,14 +124,17 @@ export class AddIngredientUseCase {
       )
     }
 
-    recipe.addIngredient(
-      ingredient,
-      input.quantity,
-      input.unit,
-    )
+    const recipeIngredient =
+      recipe.addIngredient(
+        ingredient,
+        input.quantity,
+        input.unit,
+      )
 
     await this.recipeRepository.save(
       recipe,
     )
+
+    return recipeIngredient
   }
 }
