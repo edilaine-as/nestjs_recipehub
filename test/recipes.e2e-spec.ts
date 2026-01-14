@@ -16,7 +16,7 @@ import { DataSource } from 'typeorm'
 import { clearDatabase } from './helpers/clear-data-base'
 import { createUserAndLogin } from './helpers/create-user-and-login'
 
-describe('AuthController (e2e)', () => {
+describe('RecipesController (e2e)', () => {
   let app: INestApplication
   let dataSource: DataSource
   let server: Server
