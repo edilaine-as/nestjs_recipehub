@@ -93,11 +93,11 @@ describe('RecipesController (e2e)', () => {
     )
   })
 
-  it('should get recipe by id', async () => {
+  it('should get all recipes', async () => {
     const token =
       await createUserAndLogin(server)
 
-    const createResponse =
+    const createResponse1 =
       await request(server)
         .post('/recipes')
         .set(
@@ -109,27 +109,45 @@ describe('RecipesController (e2e)', () => {
           category: 'dessert',
         })
 
-    const recipeId =
-      createResponse.body.id
+    const createResponse2 =
+      await request(server)
+        .post('/recipes')
+        .set(
+          'Authorization',
+          `Bearer ${token}`,
+        )
+        .send({
+          title: 'bolo',
+          category: 'dessert',
+        })
+
+    const recipeId1 =
+      createResponse1.body.id
+    const recipeId2 =
+      createResponse2.body.id
 
     const response = await request(
       server,
     )
-      .get(`/recipes/${recipeId}`)
+      .get(`/recipes`)
       .set(
         'Authorization',
         `Bearer ${token}`,
       )
       .expect(200)
 
+    expect(response.body).toHaveLength(
+      2,
+    )
     expect(response.body).toEqual(
-      expect.objectContaining({
-        id: recipeId,
-        title: 'bolo',
-        category: 'dessert',
-        ingredients: [],
-        steps: [],
-      }),
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: recipeId1,
+        }),
+        expect.objectContaining({
+          id: recipeId2,
+        }),
+      ]),
     )
   })
 
@@ -508,6 +526,7 @@ describe('RecipesController (e2e)', () => {
         description:
           'Passo 1 atualizado',
       })
+      .expect(200)
 
     expect(response.body).toEqual(
       expect.objectContaining({
