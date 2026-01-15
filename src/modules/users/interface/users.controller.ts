@@ -4,6 +4,8 @@ import {
   Param,
   Post,
   Put,
+  Request,
+  UseGuards,
 } from '@nestjs/common'
 import { CreateUserUseCase } from '../application/use-cases/create-user.use-case'
 import { UpdateUserUseCase } from '../application/use-cases/update-user.use-case'
@@ -13,6 +15,8 @@ import {
   IsString,
   MinLength,
 } from 'class-validator'
+import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth.guards'
+import { JwtPayloadDto } from 'src/modules/auth/shared/dto/jwt-payload.dto'
 
 class CreateUserDto {
   @IsString()
@@ -64,17 +68,28 @@ export class UsersController {
     }
   }
 
-  @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @Put()
   async updateUser(
     @Param('id') id: string,
     @Body() body: UpdateUserDto,
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
   ) {
+    const userId = req.user.userId
+
     const updateUser =
       await this.updateUserUseCase.execute(
-        id,
+        userId,
         body,
       )
 
-    return updateUser
+    return {
+      id: updateUser.getId(),
+      name: updateUser.getName(),
+      email: updateUser.getEmail(),
+    }
   }
 }
