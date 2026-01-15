@@ -14,7 +14,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZ
 {
   "name": "farinha",
   "type": "dairy",
-  "userId": "5002f32a-6e78-4c0a-9bed-93577581fcdb"
 }
 
 ### Atualizar ingrediente (PUT)

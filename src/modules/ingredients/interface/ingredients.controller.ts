@@ -21,7 +21,6 @@ import {
   IsEnum,
   IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator'
 
 class CreateIngredientDto {
@@ -30,9 +29,6 @@ class CreateIngredientDto {
 
   @IsEnum(IngredientType)
   type: IngredientType
-
-  @IsUUID()
-  userId: string
 }
 
 class UpdateIngredientDto {
@@ -103,17 +99,25 @@ export class IngredientsController {
   @Post()
   async createIngredient(
     @Body() body: CreateIngredientDto,
+    @Request()
+    req: Request & {
+      user: JwtPayloadDto
+    },
   ) {
+    const userId = req.user.userId
+
     const ingredient =
       await this.createIngredientUseCase.execute(
-        body,
+        {
+          ...body,
+          userId,
+        },
       )
 
     return {
       id: ingredient.getId(),
       name: ingredient.getName(),
       type: ingredient.getType(),
-      userId: ingredient.getUserId(),
     }
   }
 
