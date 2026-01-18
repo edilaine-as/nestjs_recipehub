@@ -33,73 +33,166 @@ import {
   IsUUID,
   Min,
 } from 'class-validator'
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 
 class CreateRecipeDto {
   @IsString()
+  @ApiProperty({
+    description: 'Recipe title',
+    example: 'Apple pie',
+  })
   title: string
 
   @IsEnum(RecipeCategory)
+  @ApiProperty({
+    description: 'Recipe category',
+    enum: RecipeCategory,
+    example: RecipeCategory.DESSERT,
+  })
   category: RecipeCategory
 }
 
 class AddIngredientDto {
   @IsOptional()
   @IsUUID()
+  @ApiPropertyOptional({
+    description:
+      'Ingredient ID (UUID v4)',
+    example:
+      '550e8400-e29b-41d4-a716-446655440000',
+  })
   id?: string
 
   @IsString()
+  @ApiProperty({
+    description: 'Ingredient name',
+    example: 'Milk',
+  })
   name: string
 
   @IsEnum(IngredientType)
+  @ApiProperty({
+    description: 'Ingredient type',
+    enum: IngredientType,
+    example: IngredientType.DAIRY,
+  })
   type: IngredientType
 
   @IsNumber()
   @IsPositive()
+  @ApiProperty({
+    description:
+      'Quantity of the ingredient',
+    example: 1,
+  })
   quantity: number
 
   @IsEnum(RecipeIngredientUnit)
+  @ApiProperty({
+    description:
+      'Recipe ingredient unit',
+    enum: RecipeIngredientUnit,
+    example: RecipeIngredientUnit.CUP,
+  })
   unit: RecipeIngredientUnit
 }
 
 class AddStepDto {
   @IsInt()
   @Min(1)
+  @ApiProperty({
+    description: 'Step of the recipe',
+    example: 1,
+  })
   step: number
 
   @IsString()
+  @ApiProperty({
+    description:
+      'Description of the step recipe',
+    example: 'Step number 1',
+  })
   description: string
 }
 
 class UpdateRecipeDto {
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional({
+    description:
+      'New title of the recipe',
+    example: 'Pie',
+  })
   title?: string
 
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional({
+    description:
+      'New category of the recipe',
+    enum: RecipeCategory,
+    example: RecipeCategory.MAIN_DISH,
+  })
   category?: RecipeCategory
 }
 
 class UpdateRecipeIngredientDto {
   @IsOptional()
   @IsUUID()
+  @ApiPropertyOptional({
+    description:
+      'New ingredient ID to recipe ingredient',
+    example:
+      '550e8400-e29b-41d4-a716-446655440000',
+  })
   id?: string // ingredient
 
   @IsOptional()
   @IsNumber()
   @IsPositive()
+  @ApiPropertyOptional({
+    description:
+      'New quantity to recipe ingredient',
+    example: 200,
+  })
   quantity?: number
 
   @IsOptional()
   @IsEnum(RecipeIngredientUnit)
+  @ApiPropertyOptional({
+    description:
+      'New unit to recipe ingredient',
+    enum: RecipeIngredientUnit,
+    example:
+      RecipeIngredientUnit.MILLILITER,
+  })
   unit?: RecipeIngredientUnit
 }
 
 class UpdateStepDto {
   @IsString()
+  @ApiProperty({
+    description:
+      'New description to step recipe',
+    example: 'New step',
+  })
   description: string
 }
 
+@ApiTags('Recipes')
+@ApiBearerAuth()
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
 @UseGuards(JwtAuthGuard)
 @Controller('recipes')
 export class RecipesController {
@@ -116,6 +209,24 @@ export class RecipesController {
   ) {}
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Get recipe by ID',
+    description:
+      'Retrieves a recipe by its ID for the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Recipe ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Recipe retrieved successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Recipe not found',
+  })
   async getRecipeById(
     @Param('id') id: string,
     @Request()
@@ -168,6 +279,16 @@ export class RecipesController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'List recipes',
+    description:
+      'Retrieves all recipes belonging to the authenticated user',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Recipes retrieved successfully',
+  })
   async listRecipes(
     @Request()
     req: Request & {
@@ -215,6 +336,20 @@ export class RecipesController {
   }
 
   @Post()
+  @ApiOperation({
+    summary: 'Create a recipe',
+    description:
+      'Creates a new recipe for the authenticated user',
+  })
+  @ApiResponse({
+    status: 201,
+    description:
+      'Recipe created successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid request body',
+  })
   async createRecipe(
     @Body() body: CreateRecipeDto,
     @Request()
@@ -240,6 +375,30 @@ export class RecipesController {
   }
 
   @Post(':id/ingredients')
+  @ApiOperation({
+    summary: 'Add ingredient to recipe',
+    description:
+      'Adds an ingredient to a recipe. The ingredient can be an existing one (by ID) or a new one (by name).',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Recipe ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 201,
+    description:
+      'Ingredient added successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description:
+      'Recipe or ingredient not found',
+  })
+  @ApiResponse({
+    status: 409,
+    description:
+      'Ingredient already exists in this recipe',
+  })
   async addIngredient(
     @Param('id') id: string,
     @Body() body: AddIngredientDto,
@@ -281,6 +440,29 @@ export class RecipesController {
   }
 
   @Post(':id/steps')
+  @ApiOperation({
+    summary: 'Add step to recipe',
+    description:
+      'Adds a new step to a recipe. The step number must be unique within the recipe.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Recipe ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 201,
+    description:
+      'Step added successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Recipe not found',
+  })
+  @ApiResponse({
+    status: 409,
+    description:
+      'Step already exists in this recipe',
+  })
   async addStep(
     @Param('id') id: string,
     @Body() body: AddStepDto,
@@ -311,6 +493,24 @@ export class RecipesController {
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Update recipe',
+    description:
+      'Partially updates a recipe. Only provided fields will be updated.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Recipe ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Recipe updated successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Recipe not found',
+  })
   async updateRecipe(
     @Param('id') id: string,
     @Body() body: UpdateRecipeDto,
@@ -331,6 +531,26 @@ export class RecipesController {
   }
 
   @Patch(':id/ingredients')
+  @ApiOperation({
+    summary: 'Update recipe ingredient',
+    description:
+      'Partially updates a recipe ingredient. Allows changing the ingredient, quantity, or unit.',
+  })
+  @ApiParam({
+    name: 'id',
+    description:
+      'Recipe ingredient ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Recipe ingredient updated successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description:
+      'Recipe ingredient or ingredient not found',
+  })
   async updateIngredient(
     @Param('id') id: string,
     @Body()
@@ -384,6 +604,26 @@ export class RecipesController {
   }
 
   @Patch(':id/steps')
+  @ApiOperation({
+    summary: 'Update recipe step',
+    description:
+      'Partially updates a recipe step. Only the description can be updated.',
+  })
+  @ApiParam({
+    name: 'id',
+    description:
+      'Recipe step ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Recipe step updated successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description:
+      'Recipe step not found',
+  })
   async updateStep(
     @Param('id') id: string,
     @Body() body: UpdateStepDto,
@@ -424,6 +664,24 @@ export class RecipesController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Delete recipe',
+    description:
+      'Deletes a recipe by its ID for the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Recipe ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Recipe deleted successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Recipe not found',
+  })
   async deleteRecipe(
     @Param('id') id: string,
     @Request()

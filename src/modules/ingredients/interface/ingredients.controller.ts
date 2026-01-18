@@ -22,25 +22,60 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator'
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 
 class CreateIngredientDto {
+  @ApiProperty({
+    description: 'Ingredient name',
+    example: 'Sugar',
+  })
   @IsString()
   name: string
 
+  @ApiProperty({
+    description: 'Ingredient type',
+    enum: IngredientType,
+    example:
+      IngredientType.SUGAR_SWEETENER,
+  })
   @IsEnum(IngredientType)
   type: IngredientType
 }
 
 class UpdateIngredientDto {
+  @ApiPropertyOptional({
+    description: 'Ingredient name',
+    example: 'Brown sugar',
+  })
   @IsOptional()
   @IsString()
   name?: string
 
+  @ApiPropertyOptional({
+    description: 'Ingredient type',
+    enum: IngredientType,
+    example:
+      IngredientType.SUGAR_SWEETENER,
+  })
   @IsOptional()
   @IsEnum(IngredientType)
   type?: IngredientType
 }
 
+@ApiTags('Ingredients')
+@ApiBearerAuth()
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
 @UseGuards(JwtAuthGuard)
 @Controller('ingredients')
 export class IngredientsController {
@@ -53,6 +88,25 @@ export class IngredientsController {
   ) {}
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Get ingredient by ID',
+    description:
+      'Retrieves an ingredient by its ID for the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    description:
+      'Ingredient ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Ingredient retrieved successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Ingredient not found',
+  })
   async getIngredientById(
     @Param('id') id: string,
     @Request()
@@ -76,6 +130,16 @@ export class IngredientsController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'List ingredients',
+    description:
+      'Retrieves all ingredients for the authenticated user',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Ingredients retrieved successfully',
+  })
   async listIngredients(
     @Request()
     req: Request & {
@@ -97,6 +161,21 @@ export class IngredientsController {
   }
 
   @Post()
+  @ApiOperation({
+    summary: 'Create ingredient',
+    description:
+      'Creates a new ingredient for the authenticated user',
+  })
+  @ApiResponse({
+    status: 201,
+    description:
+      'Ingredient created successfully',
+  })
+  @ApiResponse({
+    status: 409,
+    description:
+      'Ingredient already exists',
+  })
   async createIngredient(
     @Body() body: CreateIngredientDto,
     @Request()
@@ -122,6 +201,25 @@ export class IngredientsController {
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Update ingredient',
+    description:
+      'Updates an ingredient for the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    description:
+      'Ingredient ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Ingredient updated successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Ingredient not found',
+  })
   async updateIngredient(
     @Param('id') id: string,
     @Body() body: UpdateIngredientDto,
@@ -148,6 +246,25 @@ export class IngredientsController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Delete ingredient',
+    description:
+      'Deletes an ingredient by its ID for the authenticated user',
+  })
+  @ApiParam({
+    name: 'id',
+    description:
+      'Ingredient ID (UUID v4)',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Ingredient deleted successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Ingredient not found',
+  })
   async deleteIngredient(
     @Param('id') id: string,
     @Request()

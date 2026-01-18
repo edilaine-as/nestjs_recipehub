@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Param,
   Post,
   Patch,
   Request,
@@ -17,34 +16,67 @@ import {
 } from 'class-validator'
 import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth.guards'
 import { JwtPayloadDto } from 'src/modules/auth/shared/dto/jwt-payload.dto'
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 
 class CreateUserDto {
   @IsString()
+  @ApiProperty({
+    description: 'User name',
+    example: 'John Doe',
+  })
   name: string
 
   @IsEmail()
+  @ApiProperty({
+    description: 'User email address',
+    example: 'john.doe@email.com',
+  })
   email: string
 
   @IsString()
   @MinLength(6)
+  @ApiProperty({
+    description: 'User password',
+    example: 'password123',
+  })
   password: string
 }
 
 class UpdateUserDto {
   @IsOptional()
   @IsString()
+  @ApiPropertyOptional({
+    description: 'User name',
+    example: 'John Doe',
+  })
   name?: string
 
   @IsOptional()
   @IsEmail()
+  @ApiPropertyOptional({
+    description: 'User email address',
+    example: 'john.doe@email.com',
+  })
   email?: string
 
   @IsOptional()
   @IsString()
   @MinLength(6)
+  @ApiPropertyOptional({
+    description: 'User password',
+    example: 'password123',
+  })
   password?: string
 }
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(
@@ -53,6 +85,16 @@ export class UsersController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Create a user',
+    description:
+      'Creates a new user in the system',
+  })
+  @ApiResponse({
+    status: 409,
+    description:
+      'User with this email already exists',
+  })
   async createUser(
     @Body()
     body: CreateUserDto,
@@ -69,9 +111,32 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Patch()
+  @ApiOperation({
+    summary: 'Partially update a user',
+    description:
+      'Updates one or more fields of an existing user',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'User updated successfully',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'User not found',
+  })
+  @ApiResponse({
+    status: 409,
+    description:
+      'Email is already in use',
+  })
   async updateUser(
-    @Param('id') id: string,
     @Body() body: UpdateUserDto,
     @Request()
     req: Request & {

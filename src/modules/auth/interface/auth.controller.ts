@@ -9,13 +9,27 @@ import {
   IsString,
   MinLength,
 } from 'class-validator'
+import {
+  ApiOperation,
+  ApiProperty,
+  ApiResponse,
+} from '@nestjs/swagger'
 
-class loginUserDto {
+class LoginUserDto {
   @IsEmail()
+  @ApiProperty({
+    description: 'User email',
+    example: 'user@email.com',
+  })
   email: string
 
   @IsString()
   @MinLength(6)
+  @ApiProperty({
+    description: 'User password',
+    minLength: 6,
+    example: 'password123',
+  })
   password: string
 }
 
@@ -26,9 +40,22 @@ export class AuthController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'User login',
+    description:
+      'Authenticates a user and returns an access token',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Login successful',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid credentials',
+  })
   async login(
     @Body()
-    body: loginUserDto,
+    body: LoginUserDto,
   ) {
     return this.loginUseCase.execute(
       body.email,

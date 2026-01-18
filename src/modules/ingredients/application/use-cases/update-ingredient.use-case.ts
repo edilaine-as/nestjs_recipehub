@@ -34,11 +34,11 @@ export class UpdateIngredientUseCase {
       )
     }
 
-    if (input.name) {
+    if (input.name !== undefined) {
       ingredient.setName(input.name)
     }
 
-    if (input.type) {
+    if (input.type !== undefined) {
       ingredient.setType(input.type)
     }
 
