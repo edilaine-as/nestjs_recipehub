@@ -8,8 +8,8 @@ Content-Type: application/json
   "password": "securepassword"
 }
 
-### Atualizar usuário (PUT)
-PUT http://localhost:3333/users/5002f32a-6e78-4c0a-9bed-93577581fcdb
+### Atualizar usuário (PATCH)
+PATCH http://localhost:3333/users/5002f32a-6e78-4c0a-9bed-93577581fcdb
 Content-Type: application/json
 
 {

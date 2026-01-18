@@ -83,7 +83,7 @@ describe('IngredientsController (e2e)', () => {
     const response = await request(
       server,
     )
-      .put(`/users`)
+      .patch(`/users`)
       .set(
         'Authorization',
         `Bearer ${token}`,

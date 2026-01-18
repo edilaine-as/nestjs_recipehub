@@ -200,7 +200,7 @@ describe('IngredientsController (e2e)', () => {
     const response = await request(
       server,
     )
-      .put(
+      .patch(
         `/ingredients/${ingredientId}`,
       )
       .set(

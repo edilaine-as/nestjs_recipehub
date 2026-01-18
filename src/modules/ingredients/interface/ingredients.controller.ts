@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Patch,
   Request,
   UseGuards,
 } from '@nestjs/common'
@@ -121,7 +121,7 @@ export class IngredientsController {
     }
   }
 
-  @Put(':id')
+  @Patch(':id')
   async updateIngredient(
     @Param('id') id: string,
     @Body() body: UpdateIngredientDto,

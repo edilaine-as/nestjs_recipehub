@@ -3,7 +3,7 @@ import {
   Controller,
   Param,
   Post,
-  Put,
+  Patch,
   Request,
   UseGuards,
 } from '@nestjs/common'
@@ -69,7 +69,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put()
+  @Patch()
   async updateUser(
     @Param('id') id: string,
     @Body() body: UpdateUserDto,

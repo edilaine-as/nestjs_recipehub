@@ -385,7 +385,7 @@ describe('RecipesController (e2e)', () => {
     const response = await request(
       server,
     )
-      .put(`/recipes/${recipeId}`)
+      .patch(`/recipes/${recipeId}`)
       .set(
         'Authorization',
         `Bearer ${token}`,
@@ -445,7 +445,7 @@ describe('RecipesController (e2e)', () => {
     const response = await request(
       server,
     )
-      .put(
+      .patch(
         `/recipes/${recipeIngredientId}/ingredients`,
       )
       .set(
@@ -515,7 +515,7 @@ describe('RecipesController (e2e)', () => {
     const response = await request(
       server,
     )
-      .put(
+      .patch(
         `/recipes/${recipeStepId}/steps`,
       )
       .set(

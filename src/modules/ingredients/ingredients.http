@@ -16,8 +16,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZ
   "type": "dairy",
 }
 
-### Atualizar ingrediente (PUT)
-PUT http://localhost:3333/ingredients/74f393ed-c6b0-4e84-90e1-52c109110a73
+### Atualizar ingrediente (PATCH)
+PATCH http://localhost:3333/ingredients/74f393ed-c6b0-4e84-90e1-52c109110a73
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1MDAyZjMyYS02ZTc4LTRjMGEtOWJlZC05MzU3NzU4MWZjZGIiLCJlbWFpbCI6ImRpbGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjQ4OTYyODgsImV4cCI6MTc2NDg5OTg4OH0.IJagRXTJuXRxyn6yoCtzb48RKRT5zIgwvBURCvSOMYw
 

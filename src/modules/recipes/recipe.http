@@ -38,8 +38,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWI3N
   "description": "Separe todos os ingredientes"
 }
 
-### Atualizar receita (PUT)
-PUT http://localhost:3333/recipes/37cbb205-caa2-4176-8d19-f0c68c35717f
+### Atualizar receita (PATCH)
+PATCH http://localhost:3333/recipes/37cbb205-caa2-4176-8d19-f0c68c35717f
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWI3NmZmNC04Y2YyLTQ0NWUtYTU2Mi1mNzUwODRmMzgxYWUiLCJlbWFpbCI6ImVkaWxhQGV4YW1wbGUuY29tIiwiaWF0IjoxNzY4MjczOTI1LCJleHAiOjE3NjgyNzc1MjV9.mIV4zGbNchj2nSOoYu3BK6_xhpZ1bJnV3CuzxeY2GrQ
 
@@ -47,8 +47,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWI3N
   "title": "torta doce"
 }
 
-### Atualizar ingredientes da receita (PUT)
-PUT http://localhost:3333/recipes/858f1a08-7a77-4d98-a2f7-bf02169b926d/ingredients
+### Atualizar ingredientes da receita (PATCH)
+PATCH http://localhost:3333/recipes/858f1a08-7a77-4d98-a2f7-bf02169b926d/ingredients
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWI3NmZmNC04Y2YyLTQ0NWUtYTU2Mi1mNzUwODRmMzgxYWUiLCJlbWFpbCI6ImVkaWxhQGV4YW1wbGUuY29tIiwiaWF0IjoxNzY4MjczOTI1LCJleHAiOjE3NjgyNzc1MjV9.mIV4zGbNchj2nSOoYu3BK6_xhpZ1bJnV3CuzxeY2GrQ
 
@@ -56,8 +56,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWI3N
   "id": "e81bf5f6-4219-4375-9d08-c97a53e3c766"
 }
 
-### Atualizar steps da receita (PUT)
-PUT http://localhost:3333/recipes/1588c215-4def-4fc3-aace-c5e3c6958f3a/steps
+### Atualizar steps da receita (PATCH)
+PATCH http://localhost:3333/recipes/1588c215-4def-4fc3-aace-c5e3c6958f3a/steps
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWI3NmZmNC04Y2YyLTQ0NWUtYTU2Mi1mNzUwODRmMzgxYWUiLCJlbWFpbCI6ImVkaWxhQGV4YW1wbGUuY29tIiwiaWF0IjoxNzY4MjczOTI1LCJleHAiOjE3NjgyNzc1MjV9.mIV4zGbNchj2nSOoYu3BK6_xhpZ1bJnV3CuzxeY2GrQ
 
