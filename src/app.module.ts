@@ -33,8 +33,7 @@ import { IngredientsModule } from './modules/ingredients/ingredients.module'
           __dirname
         }/**/*.entity{.ts,.js}`,
       ],
-      autoLoadEntities: true,
-      synchronize: true, // remover em produção
+      synchronize: false, // false em produção
     }),
     UsersModule,
     AuthModule,
