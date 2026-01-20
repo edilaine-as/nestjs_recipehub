@@ -44,7 +44,7 @@ describe('IngredientsController (e2e)', () => {
     dataSource = app.get(DataSource)
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await clearDatabase(dataSource)
   })
 

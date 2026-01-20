@@ -28,12 +28,28 @@ import { IngredientsModule } from './modules/ingredients/ingredients.module'
       password:
         process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [
-        `${
-          __dirname
-        }/**/*.entity{.ts,.js}`,
-      ],
-      synchronize: false, // false em produção
+
+      autoLoadEntities:
+        process.env.NODE_ENV ===
+          'test' ||
+        process.env.NODE_ENV ===
+          'development',
+
+      entities: !(
+        process.env.NODE_ENV ===
+          'test' ||
+        process.env.NODE_ENV ===
+          'development'
+      )
+        ? [
+            `${
+              __dirname
+            }/../**/*.entity.js`,
+          ]
+        : undefined,
+
+      synchronize:
+        process.env.NODE_ENV === 'test',
     }),
     UsersModule,
     AuthModule,
